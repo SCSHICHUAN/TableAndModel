@@ -15,8 +15,8 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TableAndModel" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Nxa-g5-ewe"/>
-                        <viewControllerLayoutGuide type="bottom" id="n2F-BP-4wm"/>
+                        <viewControllerLayoutGuide type="top" id="HYU-FQ-fEW"/>
+                        <viewControllerLayoutGuide type="bottom" id="SK6-a6-2kU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -26,11 +26,11 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="heroCell" rowHeight="70" id="9lu-ig-yQw">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="heroCell" rowHeight="70" id="9lu-ig-yQw">
                                         <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9lu-ig-yQw" id="Hbu-VJ-Q5u">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Jax" translatesAutoresizingMaskIntoConstraints="NO" id="AYs-9u-hwA">
@@ -41,7 +41,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="诺克萨斯统领" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RhJ-4s-pA9">
-                                                    <rect key="frame" x="256" y="6" width="115" height="13"/>
+                                                    <rect key="frame" x="223" y="6" width="115" height="13"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="13" id="6y6-27-3qd"/>
                                                         <constraint firstAttribute="width" constant="115" id="FJU-nB-1ne"/>
@@ -71,7 +71,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fighter" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1zR-T8-u0W">
-                                                    <rect key="frame" x="103" y="25" width="169" height="30"/>
+                                                    <rect key="frame" x="86.5" y="25" width="169" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="169" id="jPd-Rq-liS"/>
                                                         <constraint firstAttribute="height" constant="30" id="l8w-Iw-tA2"/>
@@ -81,7 +81,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="106" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Support" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Gp-jc-qm9">
-                                                    <rect key="frame" x="273" y="19" width="98" height="12"/>
+                                                    <rect key="frame" x="240" y="19" width="98" height="12"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="12" id="OY6-Ng-qlB"/>
                                                         <constraint firstAttribute="width" constant="98" id="VLY-jh-5VG"/>
@@ -106,6 +106,9 @@
                                                 <constraint firstItem="enV-WR-AQv" firstAttribute="top" secondItem="Hbu-VJ-Q5u" secondAttribute="top" constant="4" id="xqV-Oj-vZI"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="QUb-kZ-FhD" kind="push" identifier="1000" id="KGE-aD-Qeo"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -116,8 +119,8 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="n2F-BP-4wm" firstAttribute="top" secondItem="8BE-M9-KVo" secondAttribute="bottom" id="Cde-wf-S5R"/>
-                            <constraint firstItem="8BE-M9-KVo" firstAttribute="top" secondItem="Nxa-g5-ewe" secondAttribute="bottom" id="H2p-ez-AnH"/>
+                            <constraint firstItem="SK6-a6-2kU" firstAttribute="top" secondItem="8BE-M9-KVo" secondAttribute="bottom" id="Cde-wf-S5R"/>
+                            <constraint firstItem="8BE-M9-KVo" firstAttribute="top" secondItem="HYU-FQ-fEW" secondAttribute="bottom" id="H2p-ez-AnH"/>
                             <constraint firstAttribute="trailing" secondItem="8BE-M9-KVo" secondAttribute="trailing" id="UgY-dp-bhc"/>
                             <constraint firstItem="8BE-M9-KVo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="oC4-4O-h4c"/>
                         </constraints>
@@ -145,6 +148,42 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="225.5" y="50.5"/>
+        </scene>
+        <!--Hero View Controller-->
+        <scene sceneID="1s7-eo-SA5">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iju-fd-E7U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController restorationIdentifier="HeroViewController" storyboardIdentifier="HeroViewController" id="QUb-kZ-FhD" customClass="HeroViewController" customModule="TableAndModel" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8eO-UC-amC"/>
+                        <viewControllerLayoutGuide type="bottom" id="ni3-xX-oGL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VCT-1g-ztF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RVh-rS-0xY">
+                                <rect key="frame" x="7" y="79" width="352" height="190"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9U-vo-OeR">
+                                <rect key="frame" x="7" y="284" width="360" height="235"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="HaZ-Br-cL0"/>
+                    <connections>
+                        <outlet property="heroStory" destination="b9U-vo-OeR" id="JIH-FZ-YSs"/>
+                        <outlet property="imageView1" destination="RVh-rS-0xY" id="pEd-PW-CZi"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="759.5" y="62.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WsQ-9s-fQk">

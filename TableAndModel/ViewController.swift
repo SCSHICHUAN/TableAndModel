@@ -9,14 +9,14 @@
 import UIKit
 
 var heroModelArray:[HeroModel] = []
+var heroIDDict:NSMutableDictionary = [:]
 
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
-    
     @IBAction func ddddd(_ sender: UIBarButtonItem) {
-        self.tableView.reloadData()
+       
     }
     
     
@@ -26,7 +26,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        GETACtion()
+       GETACtion()
         
     }
 
@@ -68,6 +68,44 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return cell
     }
    
+   
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//
+//
+//        let vc = HeroViewController.init(nibName:"HeroViewController", bundle: nil)
+//        var indexPath = tableView.indexPathForSelectedRow
+//        let name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
+//
+//         print("heroName==\(name)")
+//         vc.heroName = name
+//
+//        self.navigationController?.pushViewController(vc, animated: true)
+//
+//    }
+//
+    
+    
+    // Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+      
+       
+        
+        if segue.identifier == "1000" {
+            let vc = segue.destination as! HeroViewController
+            
+                    var indexPath = tableView.indexPathForSelectedRow
+                    let name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
+            
+                     print("heroName==\(name)")
+                     vc.heroName = name
+            }
+        
+        
+    }
+    
+    
     
     
     
@@ -103,8 +141,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))
            
             var dogString:String = NSString(data: data!, encoding: enc)! as String
+            self.GETACtion2(herID: dogString)
             
-          //   print("str:\(dogString)")
+            // print("str:\(dogString)")
             
             let range = dogString.index(dogString.endIndex, offsetBy: -43)..<dogString.endIndex
             let range2 = dogString.startIndex..<dogString.index(dogString.startIndex, offsetBy:2080)
@@ -114,15 +153,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
            // print("str2:\(dogString)")
             
             let testData = dogString.data(using: String.Encoding.utf8) // String转UTF8
-    
-           
             //转Json
             let jsonData:NSDictionary = try! JSONSerialization.jsonObject(with: testData!, options: .mutableContainers) as! NSDictionary
             
            
 
             // print(jsonData);
-             let heroCount =  jsonData.count
+            
     
             
             for nameHero in jsonData.allKeys {
@@ -144,9 +181,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                     skill =  tags[0] as! String
                 }
                 
-                print("name = \(name),id = \(id),title = \(title)")
-                print("\(tags)")
-                print("http://ossweb-img.qq.com/images/lol/img/champion/\(nameHero).png\n")
+//                print("name = \(name),id = \(id),title = \(title)")
+//                print("\(tags)")
+//                print("http://ossweb-img.qq.com/images/lol/img/champion/\(nameHero).png\n")
                 
                 
            
@@ -166,8 +203,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
             
             
-             print("heroCount = \(heroCount)")
-             print("heroModelArray = \(heroModelArray)")
+            
            
             
         }
@@ -220,7 +256,84 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
    
    
+    func GETACtion2(herID:String) {
+        
+        
+        var dogString = herID
+        let range = dogString.index(dogString.endIndex, offsetBy: -31737)..<dogString.endIndex
+            let range2 = dogString.startIndex..<dogString.index(dogString.startIndex, offsetBy:58)
+            //去除一个范围内的str
+            
+            dogString.removeSubrange(range)
+            dogString.removeSubrange(range2)
+            
+          
+            
+           // print("herID= \(dogString)")
+        
+        let testData = dogString.data(using: String.Encoding.utf8) // String转UTF8
+        //转Json
+        let jsonData:NSDictionary = try! JSONSerialization.jsonObject(with: testData!, options: .mutableContainers) as! NSDictionary
+        
+
+         //    print(jsonData);
+
+        //let heroID = jsonData["1"] as!String
+       // print("herID = \(heroID)")
+          
+        for heroName in jsonData.allKeys{
+            heroIDDict.setValue(heroName as! String,forKey:jsonData[heroName] as! String)
+        }
+            
+        let heroID = heroIDDict["Lucian"] as!String
+        let sikeUrl = "http://ossweb-img.qq.com/images/lol/web201310/skin/big\(heroID)000.jpg"
+        
+        print("sikeUrl = \(sikeUrl)")
+      
+        
+    }
     
+    
+    
+    func POSTACtion3() {
+        //请求URL
+        let url:NSURL! = NSURL(string: "http://lol.qq.com/web201310/info-heros.shtml")
+        let request:NSMutableURLRequest = NSMutableURLRequest(url: url as URL)
+        let list  = NSMutableArray()
+        let paramDic = [String: String]()
+        
+        if paramDic.count > 0 {
+            //设置为POST请求
+            request.httpMethod = "POST"
+            //拆分字典,subDic是其中一项，将key与value变成字符串
+            for subDic in paramDic {
+                let tmpStr = "\(subDic.0)=\(subDic.1)"
+                list.add(tmpStr)
+            }
+            //用&拼接变成字符串的字典各项
+            let paramStr = list.componentsJoined(by: "&")
+            //UTF8转码，防止汉字符号引起的非法网址
+            let paraData = paramStr.data(using: String.Encoding.utf8)
+            //设置请求体
+            request.httpBody = paraData
+        }
+        //默认session配置
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        //发起请求
+        let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            //            let str:String! = String(data: data!, encoding: NSUTF8StringEncoding)
+            //            print("str:\(str)")
+            //转Json
+            //            let jsonData:NSDictionary = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
+            //
+            //            print(jsonData)
+            
+        }
+        //请求开始
+        dataTask.resume()
+    }
     
     
     
