@@ -13,6 +13,7 @@
 		E3996BAA2068970A009DC1AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3996BA82068970A009DC1AE /* Main.storyboard */; };
 		E3996BAC2068970A009DC1AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3996BAB2068970A009DC1AE /* Assets.xcassets */; };
 		E3996BAF2068970A009DC1AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3996BAD2068970A009DC1AE /* LaunchScreen.storyboard */; };
+		E3996BB72069CC28009DC1AE /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3996BB62069CC28009DC1AE /* HeroModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		E3996BAB2068970A009DC1AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3996BAE2068970A009DC1AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3996BB02068970A009DC1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3996BB62069CC28009DC1AE /* HeroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroModel.swift; sourceTree = "<group>"; };
 		E4E35DBD8A680A672390FB6C /* Pods-TableAndModel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAndModel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableAndModel/Pods-TableAndModel.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +86,7 @@
 				E3996BAB2068970A009DC1AE /* Assets.xcassets */,
 				E3996BAD2068970A009DC1AE /* LaunchScreen.storyboard */,
 				E3996BB02068970A009DC1AE /* Info.plist */,
+				E3996BB62069CC28009DC1AE /* HeroModel.swift */,
 			);
 			path = TableAndModel;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			files = (
 				E3996BA72068970A009DC1AE /* ViewController.swift in Sources */,
 				E3996BA52068970A009DC1AE /* AppDelegate.swift in Sources */,
+				E3996BB72069CC28009DC1AE /* HeroModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
