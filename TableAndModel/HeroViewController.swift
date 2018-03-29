@@ -7,24 +7,124 @@
 //
 
 import UIKit
+//let LogonSB   = UIStoryboard.init(name: "Logon", bundle: Bundle.main)
+//var vcc = LogonSB.instantiateViewController(withIdentifier: "OverSeaNavi")
 
-class HeroViewController: UIViewController {
+let screenW = UIScreen.main.bounds.width
+let screenH = UIScreen.main.bounds.height
+var offSetCont:CGFloat!
+
+
+class HeroViewController: UIViewController,UIScrollViewDelegate {
     var heroName:String!
-    @IBOutlet weak var imageView1: UIImageView!
-    @IBOutlet weak var heroStory: UITextView!
+    var scroTime:Timer!
+   
+    
+    
+    lazy var buttom:UIButton = {
+        let _buttom = UIButton(frame:CGRect(x:10, y:150, width:100, height:30))
+            _buttom.backgroundColor = UIColor.green
+            _buttom.addTarget(self, action:#selector(button), for:.touchUpInside)
+        return _buttom
+    }()
+    lazy var scrovView:UIScrollView = {
+        
+        let _scrovView = UIScrollView(frame:CGRect(x:0,y:0,width:screenW,height:screenH))
+        _scrovView.contentSize = CGSize(width:screenW,height:2*screenH)
+        return _scrovView
+    }()
+    
+    lazy var skinScroView:UIScrollView = {
+         let _skinScroview = UIScrollView(frame:CGRect(x:0,y:0,width:screenW,height:screenW*(9/16)))
+        _skinScroview.isPagingEnabled = true
+        _skinScroview.tag = 1011
+        return _skinScroview
+    }()
+    
+    lazy var imageView1:UIImageView = {
+        
+        let _imageView1 = UIImageView(frame:CGRect(x:5, y:5, width:screenW-10, height:screenW*(9/16)-5))
+        return _imageView1
+    }()
+   
+   
+    lazy var heroStory:UITextView = {
+        let _textView = UITextView(frame:CGRect(x:10, y:imageView1.frame.maxY, width:screenW-20, height:screenW*(9/16)))
+        return _textView
+        
+    }()
+    
+   
+    
+    
+
+    func timeStar(){
+        scroTime =  Timer.scheduledTimer(timeInterval: 3,target: self,selector: #selector(timeSelector), userInfo:nil, repeats:true)
+    }
+    
+   
+    
+    
+   
+
     
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       skinScroView.delegate = self
+      
+    
+     
+     
+       
+     
         GETACtion3()
-        // Do any additional setup after loading the view.
-        print("heroName = \(heroName)")
+      
+
+        self.view.addSubview(scrovView)
+        scrovView.addSubview(skinScroView)
+       // scrovView.addSubview(buttom)
+        scrovView.addSubview(heroStory)
+
+        timeStar()
+    
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    var currentOff = 0
+    @objc func timeSelector(){
+   
+    self.skinScroView.setContentOffset(CGPoint(x:screenW*CGFloat(self.currentOff) ,y:0), animated: true)
+       
+         currentOff+=1
+        if CGFloat(self.currentOff) == offSetCont {
+            currentOff = 0
+        }
+    }
+    
+    //UIScrollViewDelegate
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
+        if scrollView.tag == 1011 {
+            scroTime.invalidate()
+        }
+        
+    }
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool){
+        if scrollView.tag == 1011 {
+            timeStar()
+        }
+    }
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
+        let offSet =  skinScroView.contentOffset
+        currentOff  = Int(offSet.x/screenW)
+    }
+    
+    
+    
+    
+    @objc func button() {
+        print("sss")
     }
     
 
@@ -62,7 +162,7 @@ class HeroViewController: UIViewController {
             var dogString:String = NSString(data: data!, encoding: enc)! as String
             //            self.GETACtion2(herID: dogString)
             
-           // print("dogString = \(dogString)")
+//            print("dogString = \(dogString)")
             let offHead = self.heroName.count
             
             
@@ -80,18 +180,51 @@ class HeroViewController: UIViewController {
             
             let heroStory = jsonData["blurb"] as!String
             let skins = jsonData["skins"] as!NSArray
-            let skin = skins[0] as!NSDictionary
-            let skinID = skin["id"] as! String
             
-            let url = URL(string: "http://ossweb-img.qq.com/images/lol/web201310/skin/big\(skinID).jpg")
-            let data1 = try? Data(contentsOf: url!)
-            let image = UIImage(data:data1!)
+          
+            
             
             
             DispatchQueue.main.async(execute: {
-                self.imageView1.image = image
-                self.heroStory.text = heroStory
+                self.skinScroView.contentSize = CGSize(width:screenW+screenW*CGFloat(skins.count-1),height:screenW*(9/16))
+                offSetCont = CGFloat(skins.count)
             })
+                var idCount:CGFloat = 0
+                let queue = DispatchQueue(label:"download")
+            
+            
+                    
+                for skinItem in skins {
+                    
+                    queue.async{
+                        let skinID = (skinItem as! NSDictionary)["id"] as! String
+                        let url = URL(string: "http://ossweb-img.qq.com/images/lol/web201310/skin/big\(skinID).jpg")
+                        let  data1 = try? Data(contentsOf: url!)
+                        let  image = UIImage(data:data1!)
+                        
+                         print("current thread name is:\(Thread.current)")
+            
+                        DispatchQueue.main.sync(execute: {//同步
+                            
+                            print("skinID = \(skinID)")
+                            
+                            let _imageView1 = UIImageView(frame:CGRect(x:screenW*idCount+5, y:5, width:screenW-10, height:screenW*(9/16)-10))
+                            _imageView1.image = image
+                            self.skinScroView.addSubview(_imageView1)
+                        
+                        })
+                        idCount+=1
+                    }
+                    
+ 
+                    
+            }
+            
+         
+            
+          //  http://ossweb-img.qq.com/images/lol/img/passive/Malphite_GraniteShield.png
+            
+                
             
             
             print(heroStory);

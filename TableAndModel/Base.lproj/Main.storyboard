@@ -161,26 +161,9 @@
                     <view key="view" contentMode="scaleToFill" id="VCT-1g-ztF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RVh-rS-0xY">
-                                <rect key="frame" x="7" y="79" width="352" height="190"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9U-vo-OeR">
-                                <rect key="frame" x="7" y="284" width="360" height="235"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <navigationItem key="navigationItem" id="HaZ-Br-cL0"/>
-                    <connections>
-                        <outlet property="heroStory" destination="b9U-vo-OeR" id="JIH-FZ-YSs"/>
-                        <outlet property="imageView1" destination="RVh-rS-0xY" id="pEd-PW-CZi"/>
-                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="759.5" y="62.5"/>
