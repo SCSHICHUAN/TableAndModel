@@ -18,6 +18,7 @@ var offSetCont:CGFloat!
 class HeroViewController: UIViewController,UIScrollViewDelegate {
     var heroName:String!
     var scroTime:Timer!
+    var textViewOld:UILabel = UILabel()
     
 
     lazy var buttom:UIButton = {
@@ -48,9 +49,12 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
     }()
    
    
-    lazy var heroStory:UITextView = {
-        let _textView = UITextView(frame:CGRect(x:10, y:imageView1.frame.maxY, width:screenW-20, height:screenW*(9/16)))
+    lazy var heroStory:UILabel = {
+        let _textView = UILabel(frame:CGRect(x:10, y:imageView1.frame.maxY+20, width:screenW-20, height:0))
         _textView.font = UIFont.systemFont(ofSize: 15)
+        _textView.numberOfLines = 0
+        _textView.textAlignment = NSTextAlignment.left
+//        _textView.backgroundColor = UIColor(white:0,alpha:0.1)
         _textView.isUserInteractionEnabled = false
         return _textView
         
@@ -141,6 +145,10 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         print("sss")
     }
     
+    
+    
+    
+    
     func headView(jsonData: NSDictionary){
       
         let storyStr = jsonData["blurb"] as!String
@@ -153,6 +161,8 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         DispatchQueue.main.async(execute: {
             self.skinScroView.contentSize = CGSize(width:screenW+screenW*CGFloat(skins.count-1),height:screenW*(9/16))
             offSetCont = CGFloat(skins.count)
+        
+            self.heroStory.frame.size.height = self.textHeight(text: heroStory,font: UIFont.systemFont(ofSize: 15), widthMax: screenW - 20)
             self.heroStory.text = heroStory
             
         })
@@ -212,6 +222,100 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         
     }
     
+    func spells(jsonData: NSDictionary){
+        let spells = jsonData["spells"] as!NSArray
+       
+        
+        
+         var  first:CGFloat = 1
+        for i in 0...spells.count-1 {
+            
+            let dict = spells[i] as!NSDictionary
+            let id = dict["id"] as!String
+            let name = dict["name"] as!String
+            let description = dict["description"] as!String
+            let image = dict["image"] as!NSDictionary
+                let full = image["full"] as!String
+                let sprite = image["sprite"] as!String
+                let group  = image["group"] as!String
+            let tooltip = dict["tooltip"] as!String
+            
+            
+            
+          
+            
+           
+            let queue = DispatchQueue(label:"download")
+            
+            queue.sync{
+                    let url = URL(string: "http://ossweb-img.qq.com/images/lol/img/spell/\(full)")
+                    let  data1 = try? Data(contentsOf: url!)
+                    let  image = UIImage(data:data1!)
+                
+                
+                    DispatchQueue.main.sync(execute: {
+                        
+                        let imageView = UIImageView(
+                        frame:CGRect(x:10,
+                                     y:(self.heroStory.frame.maxY+20)*first + self.textViewOld.frame.maxY + 25,
+                                 width:48,
+                                height:48))
+                        imageView.image = image
+                        let H = self.textHeight(text: description, font: UIFont.systemFont(ofSize: 15), widthMax: screenW-20)
+                        let textView = UILabel(frame:CGRect(x:10,y:imageView.frame.maxY+10,width:screenW-20,height:H))
+                        let textView2 = UILabel(frame:CGRect(x:65,y:imageView.frame.maxY-15,width:screenW-20,height:15))
+                        let textView3 = UILabel(frame:CGRect(x:65,y:imageView.frame.minY,width:screenW-20,height:16))
+                        self.textViewOld = textView
+                        textView.numberOfLines = 0
+                        textView.textAlignment = NSTextAlignment.left
+                        textView.font = UIFont.systemFont(ofSize: 15)
+                        first = 0
+//                        textView2.backgroundColor  = UIColor.lightGray
+//                        textView.backgroundColor  = UIColor.gray
+                        if #available(iOS 8.2, *) {
+                            textView2.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight(rawValue: 5))
+                            textView3.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight(rawValue: 5))
+                        } else {
+                            // Fallback on earlier versions
+                        }
+                        textView.text = description
+                        textView2.text = name
+                     
+                        if i == 0 {
+                            textView3.text = "Q"
+                        }else if i == 1 {
+                            textView3.text = "W"
+                        }else if i == 2 {
+                            textView3.text = "E"
+                        }else if i == 3 {
+                            textView3.text = "R"
+                        }
+                        
+                        self.scrovView.addSubview(imageView)
+                        self.scrovView.addSubview(textView)
+                        self.scrovView.addSubview(textView2)
+                        self.scrovView.addSubview(textView3)
+                    })
+                  
+            
+        }
+                    
+            
+            
+            
+        
+        }
+        
+        
+        
+    }
+    
+    
+    
+    //计算文字的高度
+    func textHeight(text:String,font:UIFont,widthMax:CGFloat)->CGFloat{
+        return (text.boundingRect(with: CGSize(width:widthMax,height:CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin], attributes: [NSAttributedStringKey.font : font], context: nil).size).height
+    }
     
     func GET_http_char() {
         //请求URL
@@ -245,6 +349,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 let jsonData:NSDictionary =
                     try! JSONSerialization.jsonObject(with: testData!, options: .mutableContainers) as! NSDictionary
                 self.headView(jsonData: jsonData)
+                self.spells(jsonData: jsonData)
                 
             }else{
                 print("error = \(String(describing: error))")
