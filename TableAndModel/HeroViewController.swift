@@ -87,8 +87,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
+      
       
     
      skinScroView.delegate = self
@@ -96,7 +95,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
        
      
         GET_http_char()
-      
+        
 
         self.view.addSubview(scrovView)
         scrovView.addSubview(skinScroView)
@@ -231,13 +230,13 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         for i in 0...spells.count-1 {
             
             let dict = spells[i] as!NSDictionary
-            let id = dict["id"] as!String
+//            let id = dict["id"] as!String
             let name = dict["name"] as!String
             let description = dict["description"] as!String
             let image = dict["image"] as!NSDictionary
                 let full = image["full"] as!String
-                let sprite = image["sprite"] as!String
-                let group  = image["group"] as!String
+//                let sprite = image["sprite"] as!String
+//                let group  = image["group"] as!String
             let tooltip = dict["tooltip"] as!String
             
             
@@ -262,10 +261,18 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                                 height:48))
                         imageView.image = image
                         let H = self.textHeight(text: description, font: UIFont.systemFont(ofSize: 15), widthMax: screenW-20)
+                        let H2 = self.textHeight(text: tooltip, font: UIFont.systemFont(ofSize: 15), widthMax: screenW-20)
                         let textView = UILabel(frame:CGRect(x:10,y:imageView.frame.maxY+10,width:screenW-20,height:H))
                         let textView2 = UILabel(frame:CGRect(x:65,y:imageView.frame.maxY-15,width:screenW-20,height:15))
                         let textView3 = UILabel(frame:CGRect(x:65,y:imageView.frame.minY,width:screenW-20,height:16))
-                        self.textViewOld = textView
+                        let textView4 = UILabel(frame:CGRect(x:10,y:textView.frame.maxY+10,width:screenW-20,height:H2))
+                        
+                        textView4.font = UIFont.systemFont(ofSize: 15)
+                        textView4.textAlignment = NSTextAlignment.left
+                        textView4.numberOfLines = 0
+                        textView4.text = cutOutText(allStr: tooltip,starStr: "<",endStr: ">")
+                        
+                        self.textViewOld = textView4
                         textView.numberOfLines = 0
                         textView.textAlignment = NSTextAlignment.left
                         textView.font = UIFont.systemFont(ofSize: 15)
@@ -279,6 +286,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                             // Fallback on earlier versions
                         }
                         textView.text = description
+                      
                         textView2.text = name
                      
                         if i == 0 {
@@ -295,28 +303,116 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                         self.scrovView.addSubview(textView)
                         self.scrovView.addSubview(textView2)
                         self.scrovView.addSubview(textView3)
+                        self.scrovView.addSubview(textView4)
                     })
-                  
-            
-        }
-                    
-            
-            
-            
-        
+          }
         }
         
+        
+        
+        
+        //http://ossweb-img.qq.com/images/lol/img/passive/Ashe_P.png
+        let passive = jsonData["passive"] as!NSDictionary
+        let name  = passive["name"] as!String
+        let description = passive["description"] as!String
+        let full = (passive["image"] as!NSDictionary)["full"] as!String
+        
+        let queue = DispatchQueue(label:"download")
+        
+        queue.sync{
+            let H = self.textHeight(text: description, font: UIFont.systemFont(ofSize: 15), widthMax: screenW-20)
+            let url = URL(string: "http://ossweb-img.qq.com/images/lol/img/passive/\(full)")
+            let  data1 = try? Data(contentsOf: url!)
+            let  image = UIImage(data:data1!)
+            DispatchQueue.main.sync(execute: {
+                let imageView = UIImageView(frame:CGRect(x:10,y:self.textViewOld.frame.maxY + 25,width:48,height:48))
+                imageView.image = image
+                 let textView = UILabel(frame:CGRect(x:10,y:imageView.frame.maxY+10,width:screenW-20,height:H))
+                 let textView2 = UILabel(frame:CGRect(x:65,y:imageView.frame.maxY-15,width:screenW-20,height:15))
+                 let textView3 = UILabel(frame:CGRect(x:65,y:imageView.frame.minY,width:screenW-20,height:16))
+                if #available(iOS 8.2, *) {
+                    textView2.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight(rawValue: 5))
+                    textView3.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight(rawValue: 5))
+                } else {
+                    // Fallback on earlier versions
+                }
+                
+                textView.numberOfLines = 0
+                textView.textAlignment = NSTextAlignment.left
+                
+                textView.font = UIFont.systemFont(ofSize: 15)
+                
+                
+                
+                
+                
+                textView.text =  description
+                textView2.text = name
+                textView3.text = "被动技能"
+                self.scrovView.addSubview(imageView)
+                self.scrovView.addSubview(textView)
+                self.scrovView.addSubview(textView2)
+                self.scrovView.addSubview(textView3)
+                
+                
+                self.scrovView.contentSize = CGSize(width:screenW,height:textView.frame.maxY)
+                
+               
+                
+            })
+        }
         
         
     }
     
+    
+    func cutOutText(allStr:String,starStr:String,endStr:String)->String{
+        
+        var find = false
+        var finally = ""
+        var finally2 = ""
+        
+        for i in 0...allStr.endIndex.encodedOffset - starStr.endIndex.encodedOffset {
+            
+            //截取开始的字符串
+            let startIndex = allStr.index(allStr.startIndex, offsetBy:i)
+            let endIndex =  allStr.index(startIndex, offsetBy:starStr.endIndex.encodedOffset)
+            let result =    allStr[startIndex..<endIndex]
+          
+           //截取结尾的字符串
+            let startIndex2 = allStr.index(allStr.startIndex, offsetBy:i)
+            let endIndex2 =  allStr.index(startIndex2, offsetBy:endStr.endIndex.encodedOffset)
+            let result2 =    allStr[startIndex2..<endIndex2]
+           
+           
+           //如果发现头相同
+            if result == starStr {
+               find = true
+            }
+            
+            if find {
+                finally2 += result2 //字符串相加 
+            }else{
+                finally  += result2
+            }
+            
+            
+            if result2 == endStr {
+                find = false
+            }
+            
+        }
+    
+        print("finally2 = \(finally2)")
+        return finally
+    }
     
     
     //计算文字的高度
     func textHeight(text:String,font:UIFont,widthMax:CGFloat)->CGFloat{
         return (text.boundingRect(with: CGSize(width:widthMax,height:CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin], attributes: [NSAttributedStringKey.font : font], context: nil).size).height
     }
-    
+   
     func GET_http_char() {
         //请求URL
         let url = URL (string:"http://lol.qq.com/biz/hero/\(heroName as String).js")
@@ -334,7 +430,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 let encodingName = CFStringConvertEncodingToNSStringEncoding(
                     CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))
                 var dataString:String = NSString(data: data!, encoding: encodingName)! as String
-                print("dataString = \(dataString)")
+              //  print("dataString = \(dataString)")
                 
                 //截取JSON str
                 let offHead = self.heroName.count
