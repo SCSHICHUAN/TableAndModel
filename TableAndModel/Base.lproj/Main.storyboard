@@ -147,12 +147,11 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="225.5" y="50.5"/>
+            <point key="canvasLocation" x="293" y="51"/>
         </scene>
         <!--Hero View Controller-->
         <scene sceneID="1s7-eo-SA5">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Iju-fd-E7U" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController restorationIdentifier="HeroViewController" storyboardIdentifier="HeroViewController" id="QUb-kZ-FhD" customClass="HeroViewController" customModule="TableAndModel" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8eO-UC-amC"/>
@@ -165,8 +164,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="HaZ-Br-cL0"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iju-fd-E7U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="759.5" y="62.5"/>
+            <point key="canvasLocation" x="775" y="28"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WsQ-9s-fQk">
@@ -179,12 +179,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="F2u-uG-bEk"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ohm-dQ-7WY"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edA-UH-5c3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-193" y="51"/>
+            <point key="canvasLocation" x="-303" y="35"/>
         </scene>
     </scenes>
     <resources>

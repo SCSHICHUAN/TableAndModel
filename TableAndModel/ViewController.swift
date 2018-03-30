@@ -16,9 +16,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @IBOutlet weak var tableView: UITableView!
     @IBAction func ddddd(_ sender: UIBarButtonItem) {
-       
+        let  vc:TestViewController =  TestViewController()
+        vc.view.backgroundColor = UIColor.white
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
+   
     
     
     
@@ -27,7 +30,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
        GETACtion()
-        
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
     }
 
     override func didReceiveMemoryWarning() {
@@ -136,6 +141,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let session = URLSession(configuration: config)
         //发起请求
         let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            let error = String(describing: error)
+            if error != "nil" {
+                return
+            }
             
             // 获得编码ID
             let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))
