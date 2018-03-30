@@ -178,7 +178,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 let  data1 = try? Data(contentsOf: url!)
                 let  image = UIImage(data:data1!)
                 
-                print("current thread name is:\(Thread.current)")
+              //  print("current thread name is:\(Thread.current)")
                 
                 DispatchQueue.main.sync(execute: {//同步
                     
@@ -237,11 +237,13 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 let full = image["full"] as!String
 //                let sprite = image["sprite"] as!String
 //                let group  = image["group"] as!String
-            let tooltip = dict["tooltip"] as!String
+            var tooltip = dict["tooltip"] as!String
+            tooltip = "描述：" + cutOutText(allStr: tooltip,starStr: "<",endStr: ">")
             
-            
-            
-          
+            let leveltip = dict["leveltip"] as!NSDictionary
+                let label1 = leveltip["label"] as!NSArray
+                let effect1 = leveltip["effect"] as!NSArray
+                let resource = dict["resource"] as!String
             
            
             let queue = DispatchQueue(label:"download")
@@ -265,14 +267,15 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                         let textView = UILabel(frame:CGRect(x:10,y:imageView.frame.maxY+10,width:screenW-20,height:H))
                         let textView2 = UILabel(frame:CGRect(x:65,y:imageView.frame.maxY-15,width:screenW-20,height:15))
                         let textView3 = UILabel(frame:CGRect(x:65,y:imageView.frame.minY,width:screenW-20,height:16))
-                        let textView4 = UILabel(frame:CGRect(x:10,y:textView.frame.maxY+10,width:screenW-20,height:H2))
+                        let textView4 = UILabel(frame:CGRect(x:10,y:textView.frame.maxY+5,width:screenW-20,height:H2))
                         
                         textView4.font = UIFont.systemFont(ofSize: 15)
                         textView4.textAlignment = NSTextAlignment.left
                         textView4.numberOfLines = 0
-                        textView4.text = cutOutText(allStr: tooltip,starStr: "<",endStr: ">")
+                        textView4.text = tooltip
+                        textView4.textColor = UIColor.darkGray
                         
-                        self.textViewOld = textView4
+                        
                         textView.numberOfLines = 0
                         textView.textAlignment = NSTextAlignment.left
                         textView.font = UIFont.systemFont(ofSize: 15)
@@ -285,7 +288,45 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                         } else {
                             // Fallback on earlier versions
                         }
-                        textView.text = description
+                        textView.text =  cutOutText(allStr: description,starStr: "<",endStr: ">")
+                        
+                        
+                        for ii in 0...label1.count-1{
+                          
+                            let str = label1[ii] as!String
+                            let sffect = effect1[ii] as!String
+//                            sffect = cutOutText(allStr: sffect, starStr: "{", endStr: "}")
+//                            sffect = cutOutText(allStr: sffect, starStr: "", endStr: "")
+                            
+                            let textView5 = UILabel(frame:CGRect(x:10,y:textView4.frame.maxY+10+20*CGFloat(ii),width:screenW-20,height:15))
+                           textView5.font = UIFont.systemFont(ofSize: 15)
+                            textView5.textAlignment = NSTextAlignment.left
+                            textView5.numberOfLines = 0
+                            textView5.text = tooltip
+                
+                            textView5.text = str  + ":" + sffect
+                           
+                            self.scrovView.addSubview(textView5)
+                            self.textViewOld = textView5
+                            
+                        }
+                        
+                        
+                        
+                        let textView6 = UILabel(frame:CGRect(x:10,y:self.textViewOld.frame.maxY+15,width:screenW-20,height:15))
+                        textView6.font = UIFont.systemFont(ofSize: 15)
+                        textView6.textAlignment = NSTextAlignment.left
+                        textView6.numberOfLines = 0
+                        textView6.text = tooltip
+                        textView6.text = "耗蓝：" + resource
+                        self.scrovView.addSubview(textView6)
+                        self.textViewOld = textView6
+                        
+                        
+                        
+                        
+                        
+                        
                       
                         textView2.text = name
                      
@@ -346,7 +387,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 
                 
                 
-                textView.text =  description
+                textView.text =  cutOutText(allStr: description,starStr: "<",endStr: ">")
                 textView2.text = name
                 textView3.text = "被动技能"
                 self.scrovView.addSubview(imageView)
