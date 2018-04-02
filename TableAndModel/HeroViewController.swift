@@ -182,7 +182,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 
                 DispatchQueue.main.sync(execute: {//同步
                     
-                    print("skinID = \(skinID)")
+                   // print("skinID = \(skinID)")
                     
                     let _imageView1 = UIImageView(frame:CGRect(x:screenW*idCount+5, y:5, width:screenW-10, height:screenW*(9/16)-10))
                     _imageView1.image = image
@@ -318,7 +318,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                         textView6.textAlignment = NSTextAlignment.left
                         textView6.numberOfLines = 0
                         textView6.text = tooltip
-                        textView6.text = "耗蓝：" + resource
+                        textView6.text = "其他：" + resource
                         self.scrovView.addSubview(textView6)
                         self.textViewOld = textView6
                         
@@ -409,6 +409,23 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
     
     func cutOutText(allStr:String,starStr:String,endStr:String)->String{
         
+        //原理说明，把需要截取的字符串添加在一起，不要在原有的基础上截取，如果在原有的字符串截取，由于index是
+        //变换的代码不好实现，
+        //  oldStr = “11111111111111111111111111” 以三个字符串的大小为例子
+        //    查找过程 “***11111111111111111111111”
+        //    查找过程 “1***1111111111111111111111”
+        //    查找过程 “11***111111111111111111111”
+        //    查找过程 “111***11111111111111111111”
+        //    查找过程 “1111***1111111111111111111”
+        //    查找过程 “11111***111111111111111111”
+        //    查找过程 “111111***11111111111111111”
+        //    查找过程 “1111111***1111111111111111”
+        //    查找过程 “11111111***111111111111111”
+        //    查找过程 “111111111***11111111111111” 如果在这里找到了
+        //如果发现有和这三个字符串相同的字符串 ，就把这三个字符串后的字符串加起来然后返回，这样就实现了截取***后的字符串
+        
+        
+        
         var find = false
         var finally = ""
         var finally2 = ""
@@ -426,7 +443,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
             let result2 =    allStr[startIndex2..<endIndex2]
            
            
-           //如果发现头相同
+           //如果发现头str相同
             if result == starStr {
                find = true
             }
