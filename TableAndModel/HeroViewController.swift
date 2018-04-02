@@ -18,6 +18,7 @@ var offSetCont:CGFloat!
 class HeroViewController: UIViewController,UIScrollViewDelegate {
     var heroName:String!
     var scroTime:Timer!
+    var scroTime2:Timer!
     var textViewOld:UILabel = UILabel()
     
 
@@ -28,11 +29,17 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         
         return _buttom
     }()
+    lazy var mainBackImageView:UIImageView = {
+        let a = UIImageView(frame:CGRect(x:0,y:0,width:screenH*(16/9),height:screenH))
+        a.contentMode = .scaleToFill
+        return a
+    }()
     lazy var scrovView:UIScrollView = {
         
-        let _scrovView = UIScrollView(frame:CGRect(x:0,y:0,width:screenW,height:screenH))
-        _scrovView.contentSize = CGSize(width:screenW,height:2*screenH)
-        return _scrovView
+        let a = UIScrollView(frame:CGRect(x:0,y:0,width:screenH,height:screenH))
+        a.contentSize = CGSize(width:screenW,height:2*screenH)
+        a.backgroundColor = UIColor(white:0, alpha: 0.6)
+        return a
     }()
     
     lazy var skinScroView:UIScrollView = {
@@ -54,7 +61,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         _textView.font = UIFont.systemFont(ofSize: 15)
         _textView.numberOfLines = 0
         _textView.textAlignment = NSTextAlignment.left
-//        _textView.backgroundColor = UIColor(white:0,alpha:0.1)
+        _textView.textColor = UIColor(white:255,alpha:1)
         _textView.isUserInteractionEnabled = false
         return _textView
         
@@ -73,6 +80,9 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
     func timeStar(){
         scroTime =  Timer.scheduledTimer(timeInterval: 3,target: self,selector: #selector(timeSelector), userInfo:nil, repeats:true)
     }
+    func timeStar2(){
+        scroTime2 =  Timer.scheduledTimer(timeInterval: 40,target: self,selector: #selector(timeSelector2), userInfo:nil, repeats:true)
+    }
     
    
     @objc func pageChange(page: UIPageControl) {
@@ -87,16 +97,16 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-      
+       
     
      skinScroView.delegate = self
+        self.view.backgroundColor = UIColor.black
     
        
      
         GET_http_char()
         
-
+        self.view.addSubview(mainBackImageView)
         self.view.addSubview(scrovView)
         scrovView.addSubview(skinScroView)
        // scrovView.addSubview(buttom)
@@ -104,6 +114,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         scrovView.addSubview(pageControl)
 
         timeStar()
+        timeStar2()
     
     }
 
@@ -117,6 +128,23 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         if CGFloat(self.currentOff) == offSetCont {
             currentOff = 0
         }
+    }
+    
+    var mainBackImageView_a = 0
+    
+    @objc func timeSelector2(){
+        if mainBackImageView_a == 0 {
+            UIView.animate(withDuration: 39, animations: {
+                self.mainBackImageView.frame = CGRect(x:-screenH*(16/9)+screenW,y:0,width:screenH*(16/9),height:screenH)
+            })
+              mainBackImageView_a = 1
+        }else{
+            UIView.animate(withDuration: 39, animations: {
+                self.mainBackImageView.frame = CGRect(x:0,y:0,width:screenH*(16/9),height:screenH)
+            })
+            mainBackImageView_a = 0
+        }
+      
     }
     
     //UIScrollViewDelegate
@@ -169,6 +197,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         let queue = DispatchQueue(label:"download")
         //  let queue  = DispatchQueue.global() //异步
         
+        var a = 0
         
         for skinItem in skins {
             queue.async{
@@ -183,6 +212,13 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 DispatchQueue.main.sync(execute: {//同步
                     
                    // print("skinID = \(skinID)")
+                    
+                    if a == 0{
+                        self.mainBackImageView.image = image
+                        a = 1
+                        self.scroTime2.fire()
+                    }
+                    
                     
                     let _imageView1 = UIImageView(frame:CGRect(x:screenW*idCount+5, y:5, width:screenW-10, height:screenW*(9/16)-10))
                     _imageView1.image = image
@@ -217,7 +253,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         //  http://ossweb-img.qq.com/images/lol/img/passive/Malphite_GraniteShield.png
         //  http://ossweb-img.qq.com/images/lol/img/passive/Ashe_P.png
         
-        print(heroStory);
+       // print(heroStory);
         
     }
     
@@ -247,7 +283,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
             
            
             let queue = DispatchQueue(label:"download")
-            
+           
             queue.sync{
                     let url = URL(string: "http://ossweb-img.qq.com/images/lol/img/spell/\(full)")
                     let  data1 = try? Data(contentsOf: url!)
@@ -255,6 +291,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 
                 
                     DispatchQueue.main.sync(execute: {
+                       
                         
                         let imageView = UIImageView(
                         frame:CGRect(x:10,
@@ -263,17 +300,21 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                                 height:48))
                         imageView.image = image
                         let H = self.textHeight(text: description, font: UIFont.systemFont(ofSize: 15), widthMax: screenW-20)
-                        let H2 = self.textHeight(text: tooltip, font: UIFont.systemFont(ofSize: 15), widthMax: screenW-20)
+                        let H2 = self.textHeight(text: tooltip, font: UIFont.systemFont(ofSize: 13), widthMax: screenW-20)
                         let textView = UILabel(frame:CGRect(x:10,y:imageView.frame.maxY+10,width:screenW-20,height:H))
                         let textView2 = UILabel(frame:CGRect(x:65,y:imageView.frame.maxY-15,width:screenW-20,height:15))
                         let textView3 = UILabel(frame:CGRect(x:65,y:imageView.frame.minY,width:screenW-20,height:16))
                         let textView4 = UILabel(frame:CGRect(x:10,y:textView.frame.maxY+5,width:screenW-20,height:H2))
                         
-                        textView4.font = UIFont.systemFont(ofSize: 15)
+                        textView4.font = UIFont.systemFont(ofSize: 13)
                         textView4.textAlignment = NSTextAlignment.left
                         textView4.numberOfLines = 0
                         textView4.text = tooltip
-                        textView4.textColor = UIColor.darkGray
+                        
+                        textView .textColor = UIColor(white:255,alpha:0.8)
+                        textView2.textColor = UIColor(white:255,alpha:1)
+                        textView3.textColor = UIColor(white:255,alpha:1)
+                        textView4.textColor = UIColor(red: 21.0/255.0, green: 160.0/255.0, blue: 93.0/255.0, alpha: 1)
                         
                         
                         textView.numberOfLines = 0
@@ -303,6 +344,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                             textView5.textAlignment = NSTextAlignment.left
                             textView5.numberOfLines = 0
                             textView5.text = tooltip
+                            textView5.textColor =  UIColor(red: 178.0/255.0, green: 53.0/255.0, blue: 27.0/255.0, alpha: 1)
                 
                             textView5.text = str  + ":" + sffect
                            
@@ -321,7 +363,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                         textView6.text = "其他：" + resource
                         self.scrovView.addSubview(textView6)
                         self.textViewOld = textView6
-                        
+                        textView6.textColor =  UIColor(red: 178.0/255.0, green: 53.0/255.0, blue: 27.0/255.0, alpha: 1)
                         
                         
                         
@@ -364,6 +406,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
             let H = self.textHeight(text: description, font: UIFont.systemFont(ofSize: 15), widthMax: screenW-20)
             let url = URL(string: "http://ossweb-img.qq.com/images/lol/img/passive/\(full)")
             let  data1 = try? Data(contentsOf: url!)
+            if data1 == nil {return}
             let  image = UIImage(data:data1!)
             DispatchQueue.main.sync(execute: {
                 let imageView = UIImageView(frame:CGRect(x:10,y:self.textViewOld.frame.maxY + 25,width:48,height:48))
@@ -394,6 +437,10 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 self.scrovView.addSubview(textView)
                 self.scrovView.addSubview(textView2)
                 self.scrovView.addSubview(textView3)
+                
+                textView.textColor = UIColor.white
+                textView2.textColor = UIColor.white
+                textView3.textColor = UIColor.white
                 
                 
                 self.scrovView.contentSize = CGSize(width:screenW,height:textView.frame.maxY)

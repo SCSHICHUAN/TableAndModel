@@ -31,14 +31,28 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         // Do any additional setup after loading the view, typically from a nib.
        GETACtion()
         let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        item.tintColor = UIColor.black
+       // item.tintColor = UIColor.white
         self.navigationItem.backBarButtonItem = item
+        
+        //修改导航栏背景色
+        self.navigationController?.navigationBar.barTintColor =
+            UIColor(red: 50.0/255.0, green: 50.0/255.0, blue: 50.0/255.0, alpha: 1)
+        //修改导航栏文字颜色
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedStringKey.foregroundColor: UIColor.white]
+        //修改导航栏按钮颜色
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        //        self.navigationController?.navigationBar
+        //            .setBackgroundImage(UIImage(named: "bg5"), for: .default)
+        
+        
+        
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
     //UITableViewDelegate
    
@@ -103,7 +117,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                     var indexPath = tableView.indexPathForSelectedRow
                     let name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
             
-                     print("heroName==\(name)")
+                 //    print("heroName==\(name)")
                      vc.heroName = name
             }
         
