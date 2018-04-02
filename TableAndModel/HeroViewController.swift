@@ -100,7 +100,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
        
     
      skinScroView.delegate = self
-        self.view.backgroundColor = UIColor.black
+    self.view.backgroundColor = UIColor.black
     
        
      
