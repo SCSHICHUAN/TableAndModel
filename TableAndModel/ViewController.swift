@@ -10,11 +10,37 @@ import UIKit
 
 var heroModelArray:[HeroModel] = []
 var heroIDDict:NSMutableDictionary = [:]
+var heroSerchArry:[HeroModel] = []
 
 
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
-    
+
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    
+    var herVC:HeroViewController!
+    
+    var yes = 0
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
+    {
+     
+        print(searchText)
+        
+       heroSerchArry = heroModelArray.filter({ (heroModel:HeroModel) -> Bool in
+      
+        if heroModel.name.range(of: searchText) != nil {
+            return true
+        }else{
+            return false
+        }
+        
+        })
+    
+    }
+    
+  
+    
+    
     @IBAction func ddddd(_ sender: UIBarButtonItem) {
         let  vc:TestViewController =  TestViewController()
         vc.view.backgroundColor = UIColor.white
@@ -22,7 +48,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
    
-    
+     public func willDismissSearchController(_ searchController: UISearchController){
+        print("d")
+    }
     
     
 
@@ -57,7 +85,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //UITableViewDelegate
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return heroModelArray.count;
+       
+        if  heroSerchArry.count != 0 {
+            return heroSerchArry.count
+        }else{
+            return heroModelArray.count
+       }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -73,8 +107,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         var model:HeroModel
         
+        if  heroSerchArry.count != 0{
+            model = heroSerchArry[indexPath.row]
+        }else{
+            model = heroModelArray[indexPath.row]
+        }
         
-        model = heroModelArray[indexPath.row] 
+        
         name.text     = model.name
         bigName.text  = model.enName
         smolName.text = model.name2
@@ -88,40 +127,39 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
    
    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//
-//
-//        let vc = HeroViewController.init(nibName:"HeroViewController", bundle: nil)
-//        var indexPath = tableView.indexPathForSelectedRow
-//        let name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
-//
-//         print("heroName==\(name)")
-//         vc.heroName = name
-//
-//        self.navigationController?.pushViewController(vc, animated: true)
-//
-//    }
-//
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+
+        var indexPath = tableView.indexPathForSelectedRow
+        let inn = indexPath?.row
+        print("inn = \(String(describing: inn))")
+        
+        var name = ""
+        if  heroSerchArry.count != 0{
+            name = (heroSerchArry[(indexPath?.row)!] as HeroModel).enName
+        }else{
+            name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
+        }
+        
+        
+        //    print("heroName==\(name)")
+        herVC.heroName = name
+
+    }
+
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        return 70
+    }
+    
+    
+    
     
     
     // Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-      
-       
-        
         if segue.identifier == "1000" {
-            let vc = segue.destination as! HeroViewController
-            
-                    var indexPath = tableView.indexPathForSelectedRow
-                    let name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
-            
-                 //    print("heroName==\(name)")
-                     vc.heroName = name
+            herVC = segue.destination as! HeroViewController
             }
-        
-        
     }
     
     

@@ -22,12 +22,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8BE-M9-KVo">
+                            <tableView clipsSubviews="YES" tag="101" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8BE-M9-KVo">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="hcH-cZ-Bvq">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="BYZ-38-t0r" id="gpY-0m-b91"/>
+                                    </connections>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="heroCell" rowHeight="70" id="9lu-ig-yQw">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="70"/>
+                                        <rect key="frame" x="0.0" y="72" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9lu-ig-yQw" id="Hbu-VJ-Q5u">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="69.5"/>
@@ -112,8 +120,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="zJn-QJ-iH5"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="J4a-df-3RL"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="vxI-Gd-HRr"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="y5c-nT-Ntx"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -133,7 +141,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchDisplayController" destination="bnL-up-jmB" id="Kyj-ZT-NUI"/>
+                        <outlet property="searchBar" destination="hcH-cZ-Bvq" id="fuj-jm-IqS"/>
+                        <outlet property="searchDisplayController" destination="0u5-v3-AtO" id="iFI-Yv-zFS"/>
                         <outlet property="tableView" destination="8BE-M9-KVo" id="3Lb-A4-b2B"/>
                     </connections>
                 </viewController>
@@ -144,6 +153,23 @@
                         <outlet property="searchContentsController" destination="BYZ-38-t0r" id="Jne-i1-58N"/>
                         <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="Ck7-We-YbZ"/>
                         <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="rMb-K7-Zy5"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="dwy-xg-r1a">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="wq5-jz-9qS"/>
+                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="noh-jS-zP2"/>
+                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="3r1-kL-1py"/>
+                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="Dgj-UF-YoJ"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="0u5-v3-AtO">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="xnh-we-OmK"/>
+                        <outlet property="searchBar" destination="hcH-cZ-Bvq" id="lXM-7q-hcj"/>
+                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="d81-1g-RUI"/>
+                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="gXe-ZU-iOB"/>
+                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="5M2-90-gx2"/>
                     </connections>
                 </searchDisplayController>
             </objects>

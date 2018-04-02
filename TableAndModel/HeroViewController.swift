@@ -100,7 +100,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
        
     
      skinScroView.delegate = self
-    self.view.backgroundColor = UIColor.black
+     self.view.backgroundColor = UIColor.black
     
        
      
@@ -476,6 +476,10 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         var find = false
         var finally = ""
         var finally2 = ""
+        
+        if starStr.count >  allStr.count {
+            return ""
+        }
         
         for i in 0...allStr.endIndex.encodedOffset - starStr.endIndex.encodedOffset {
             
