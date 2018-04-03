@@ -18,7 +18,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var herVC:HeroViewController!
+     var searchBarStatu = 0
     
+    @IBOutlet weak var tableViewConstraint: NSLayoutConstraint!
     //UISearchBarDelegate
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
     {
@@ -36,6 +38,61 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         })
     
     }
+   
+    
+    public func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool{
+        searchBarStatu = 1
+        UIView.animate(withDuration: 0.25) {
+            searchBar.frame.origin.y = 20
+            
+        }
+        UIView.animate(withDuration: 0.25) {
+            
+            self.navigationController?.navigationBar.frame.origin.y = -44
+        }
+        tableView.reloadData()
+        return true
+    }
+    
+    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
+        searchEnd()
+        self.tableView.reloadData()
+    }
+    public func searchBarTextDidEndEditing(_ searchBar: UISearchBar){
+        
+        if heroSerchArry.count>0{
+            
+        }else{
+           searchEnd()
+
+        }
+        
+    }
+  
+    func searchEnd(){
+        searchBarStatu = 0
+          UIView.animate(withDuration: 0.25) {
+            self.navigationController?.navigationBar.frame.origin.y = 20
+            }
+          UIView.animate(withDuration: 0.25) {
+              self.searchBar.frame.origin.y = 64
+           }
+        self.tableView.reloadData()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     @IBAction func serchSrar(_ sender: UIBarButtonItem) {
@@ -62,11 +119,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         //            .setBackgroundImage(UIImage(named: "bg5"), for: .default)
         
         tableView.contentOffset = CGPoint(x: 0, y: 60)
-        
+        searchBar.frame.origin.y = 64
        GETACtion()
        
         
-        
+         
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -78,7 +135,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        
-        if  heroSerchArry.count != 0 {
+        if  searchBarStatu == 1 {
             return heroSerchArry.count
         }else{
             return heroModelArray.count
@@ -99,7 +156,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         var model:HeroModel
         
-        if  heroSerchArry.count != 0{
+        if  searchBarStatu == 1 {
             model = heroSerchArry[indexPath.row]
         }else{
             model = heroModelArray[indexPath.row]
@@ -113,25 +170,30 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         skill.text    = model.skill
         skill2.text   = model.skill2
         
-        
+      
         
         return cell
     }
    
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
+        
 
         var indexPath = tableView.indexPathForSelectedRow
         let inn = indexPath?.row
         print("inn = \(String(describing: inn))")
         
         var name = ""
-        if  heroSerchArry.count != 0{
+        if  searchBarStatu == 1 {
+            searchEnd()
             name = (heroSerchArry[(indexPath?.row)!] as HeroModel).enName
         }else{
             name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
         }
+        
+        
+        
         
         
         //    print("heroName==\(name)")
@@ -150,6 +212,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     // Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "1000" {
+           
             herVC = segue.destination as! HeroViewController
             }
     }
