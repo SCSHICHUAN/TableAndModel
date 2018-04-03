@@ -30,7 +30,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         return _buttom
     }()
     lazy var mainBackImageView:UIImageView = {
-        let a = UIImageView(frame:CGRect(x:0,y:0,width:screenH*(16/9),height:screenH))
+        let a = UIImageView(frame:CGRect(x:0,y:64,width:(screenH-64)*(16/9)-64,height:screenH-64))
         a.contentMode = .scaleToFill
         return a
     }()
@@ -135,12 +135,14 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
     @objc func timeSelector2(){
         if mainBackImageView_a == 0 {
             UIView.animate(withDuration: 39, animations: {
-                self.mainBackImageView.frame = CGRect(x:-screenH*(16/9)+screenW,y:0,width:screenH*(16/9),height:screenH)
+                self.mainBackImageView.frame =
+                CGRect(x:-(screenH-64)*(16/9)+screenW,y:64,width:(screenH-64)*(16/9),height:screenH-64)
             })
               mainBackImageView_a = 1
         }else{
             UIView.animate(withDuration: 39, animations: {
-                self.mainBackImageView.frame = CGRect(x:0,y:0,width:screenH*(16/9),height:screenH)
+                self.mainBackImageView.frame =
+                CGRect(x:0,y:64,width:(screenH-64)*(16/9)-64,height:screenH-64)
             })
             mainBackImageView_a = 0
         }

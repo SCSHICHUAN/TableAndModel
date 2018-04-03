@@ -17,10 +17,9 @@ var heroSerchArry:[HeroModel] = []
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    
     var herVC:HeroViewController!
     
-    var yes = 0
+    //UISearchBarDelegate
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
     {
      
@@ -38,28 +37,17 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     }
     
-  
     
-    
-    @IBAction func ddddd(_ sender: UIBarButtonItem) {
-        let  vc:TestViewController =  TestViewController()
-        vc.view.backgroundColor = UIColor.white
-        self.navigationController?.pushViewController(vc, animated: true)
+    @IBAction func serchSrar(_ sender: UIBarButtonItem) {
+      searchBar.becomeFirstResponder()
     }
-    
-   
-     public func willDismissSearchController(_ searchController: UISearchController){
-        print("d")
-    }
-    
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-       GETACtion()
         let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-       // item.tintColor = UIColor.white
+        // item.tintColor = UIColor.white
         self.navigationItem.backBarButtonItem = item
         
         //修改导航栏背景色
@@ -73,6 +61,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         //        self.navigationController?.navigationBar
         //            .setBackgroundImage(UIImage(named: "bg5"), for: .default)
         
+        tableView.contentOffset = CGPoint(x: 0, y: 60)
+        
+       GETACtion()
+       
         
         
     }
