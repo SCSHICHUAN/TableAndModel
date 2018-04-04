@@ -11,13 +11,14 @@ import UIKit
 var heroModelArray:[HeroModel] = []
 var heroIDDict:NSMutableDictionary = [:]
 var heroSerchArry:[HeroModel] = []
-let herVC:HeroViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"123456") as! HeroViewController
+
 
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-     var searchBarStatu = 0
+    var searchBarStatu = 0
+    
     
    
     //UISearchBarDelegate
@@ -25,8 +26,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     {
      
         print(searchText)
-        
-       heroSerchArry = heroModelArray.filter({ (heroModel:HeroModel) -> Bool in
+        heroSerchArry = heroModelArray.filter({ (heroModel:HeroModel) -> Bool in
       
         if heroModel.name.range(of: searchText) != nil {
             return true
@@ -36,28 +36,31 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             }
             return false
         }
-        
         })
-    
     }
    
     
     public func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool{
-         searchBarStatu = 1
+        searchBarStatu = 1
         tableView.reloadData()
+        self.tabBarController?.tabBar.isHidden = true
         return true
     }
-    
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
-         searchBarStatu = 0
-        self.tableView.reloadData()
+        searchBarStatu = 0
+        self.tabBarController?.tabBar.isHidden = false
+        tableView.reloadData()
     }
-    public func searchBarTextDidEndEditing(_ searchBar: UISearchBar){
-        
-       
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if (searchBar.text?.count)! > 0 {
+        }else{
+            searchBarStatu = 0
+            self.tabBarController?.tabBar.isHidden = false
+            tableView.reloadData()
+        }
         
     }
-   
+
    
 
     
@@ -101,11 +104,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        
-        if  searchBarStatu == 1 {
+        if  searchBarStatu == 1{
             return heroSerchArry.count
         }else{
-            return heroModelArray.count
-       }
+           return heroModelArray.count
+        }
+        
 
     }
     
@@ -122,7 +126,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         var model:HeroModel
         
-        if  searchBarStatu == 1 {
+        if searchBarStatu == 1 {
             model = heroSerchArry[indexPath.row]
         }else{
             model = heroModelArray[indexPath.row]
@@ -145,23 +149,25 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         
-       
-        
+    
         var indexPath = tableView.indexPathForSelectedRow
         let inn = indexPath?.row
         print("inn = \(String(describing: inn))")
         var name = ""
-
-        if tableView.tag == 101 {
-            name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
-        }else{
+        var name2 = ""
+        
+        if searchBarStatu == 1  {
              name = (heroSerchArry[(indexPath?.row)!] as HeroModel).enName
+            name2 = (heroSerchArry[(indexPath?.row)!] as HeroModel).name2
+        }else{
+            name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
+            name2 = (heroModelArray[(indexPath?.row)!] as HeroModel).name2
             }
         
-        //  print("heroName==\(name)")
-        herVC.heroName = name
-        
+      let herVC:HeroViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"123456") as! HeroViewController
+         herVC.heroName = name
          herVC.hidesBottomBarWhenPushed = true
+         herVC.title = name2
          self.navigationController?.pushViewController(herVC, animated: true)
         
     }

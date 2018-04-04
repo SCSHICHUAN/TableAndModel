@@ -97,7 +97,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-    
+   
      skinScroView.delegate = self
      self.view.backgroundColor = UIColor.black
     
@@ -145,7 +145,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
             })
             mainBackImageView_a = 0
         }
-      
+     
     }
     
     //UIScrollViewDelegate
@@ -183,7 +183,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         let heroStory = "        " + storyStr
         let skins = jsonData["skins"] as!NSArray
         let heroName = jsonData["name"] as!String
-        self.title = heroName
+       
         
         
         DispatchQueue.main.async(execute: {
