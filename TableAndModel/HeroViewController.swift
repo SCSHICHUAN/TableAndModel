@@ -7,8 +7,7 @@
 //
 
 import UIKit
-//let LogonSB   = UIStoryboard.init(name: "Logon", bundle: Bundle.main)
-//var vcc = LogonSB.instantiateViewController(withIdentifier: "OverSeaNavi")
+
 
 let screenW = UIScreen.main.bounds.width
 let screenH = UIScreen.main.bounds.height

@@ -11,16 +11,15 @@ import UIKit
 var heroModelArray:[HeroModel] = []
 var heroIDDict:NSMutableDictionary = [:]
 var heroSerchArry:[HeroModel] = []
-
+let herVC:HeroViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"123456") as! HeroViewController
 
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    var herVC:HeroViewController!
      var searchBarStatu = 0
     
-    @IBOutlet weak var tableViewConstraint: NSLayoutConstraint!
+   
     //UISearchBarDelegate
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
     {
@@ -32,6 +31,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if heroModel.name.range(of: searchText) != nil {
             return true
         }else{
+            if heroModel.name2.range(of: searchText) != nil{
+                return true
+            }
             return false
         }
         
@@ -41,59 +43,23 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
    
     
     public func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool{
-        searchBarStatu = 1
-        UIView.animate(withDuration: 0.25) {
-            searchBar.frame.origin.y = 20
-            
-        }
-        UIView.animate(withDuration: 0.25) {
-            
-            self.navigationController?.navigationBar.frame.origin.y = -44
-        }
+         searchBarStatu = 1
         tableView.reloadData()
         return true
     }
     
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
-        searchEnd()
+         searchBarStatu = 0
         self.tableView.reloadData()
     }
     public func searchBarTextDidEndEditing(_ searchBar: UISearchBar){
         
-        if heroSerchArry.count>0{
-            
-        }else{
-           searchEnd()
-
-        }
+       
         
     }
-  
-    func searchEnd(){
-        searchBarStatu = 0
-          UIView.animate(withDuration: 0.25) {
-            self.navigationController?.navigationBar.frame.origin.y = 20
-            }
-          UIView.animate(withDuration: 0.25) {
-              self.searchBar.frame.origin.y = 64
-           }
-        self.tableView.reloadData()
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
+   
+
     
     @IBAction func serchSrar(_ sender: UIBarButtonItem) {
       searchBar.becomeFirstResponder()
@@ -140,7 +106,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }else{
             return heroModelArray.count
        }
-        
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -177,50 +143,43 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
    
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
 
+        
+       
+        
         var indexPath = tableView.indexPathForSelectedRow
         let inn = indexPath?.row
         print("inn = \(String(describing: inn))")
-        
         var name = ""
-        if  searchBarStatu == 1 {
-            searchEnd()
-            name = (heroSerchArry[(indexPath?.row)!] as HeroModel).enName
-        }else{
-            name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
-        }
-        
-        
-        
-        
-        
-        //    print("heroName==\(name)")
-        herVC.heroName = name
 
+        if tableView.tag == 101 {
+            name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
+        }else{
+             name = (heroSerchArry[(indexPath?.row)!] as HeroModel).enName
+            }
+        
+        //  print("heroName==\(name)")
+        herVC.heroName = name
+        
+         herVC.hidesBottomBarWhenPushed = true
+         self.navigationController?.pushViewController(herVC, animated: true)
+        
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         return 70
     }
     
+
+//    // Segue
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "1000" {
+//
+//            herVC = segue.destination as! HeroViewController
+//            }
+//    }
     
-    
-    
-    
-    // Segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "1000" {
-           
-            herVC = segue.destination as! HeroViewController
-            }
-    }
-    
-    
-    
-    
-    
+
     func GETACtion() {
         //请求URL
         let url:NSURL! = NSURL(string: "http://lol.qq.com/biz/hero/champion.js")
