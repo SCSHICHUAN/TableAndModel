@@ -14,7 +14,10 @@ var heroSerchArry:[HeroModel] = []
 
 
 
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
+class ViewController:                                         UIViewController,UITableViewDelegate,UITableViewDataSource,UIViewControllerPreviewingDelegate,UIGestureRecognizerDelegate,UISearchBarDelegate{
+  
+  
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var searchBarStatu = 0
@@ -91,8 +94,17 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         searchBar.frame.origin.y = 64
        GETACtion()
        
+        navigationItem.leftBarButtonItem = editButtonItem
         
-         
+        
+        //3D touch with tableView
+        let oneTap = UITapGestureRecognizer(target: self, action: nil)
+        oneTap.delegate = self
+        oneTap.numberOfTouchesRequired = 1
+        tableView.addGestureRecognizer(oneTap)
+        
+        
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -130,6 +142,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             model = heroSerchArry[indexPath.row]
         }else{
             model = heroModelArray[indexPath.row]
+            if #available(iOS 9.0, *) {
+                registerForPreviewing(with: self, sourceView: cell)
+            } else {
+                // Fallback on earlier versions
+            }
         }
         
         
@@ -141,6 +158,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         skill2.text   = model.skill2
         
       
+       
         
         return cell
     }
@@ -176,7 +194,80 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return 70
     }
     
+    // Edit mode + editButtonItem
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.setEditing(editing, animated: true)
+    }
+    // Delete the cell
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            heroModelArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableViewRowAnimation.none)
+        }
+    }
+  
+    // Move the cell 什么时候开始move
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return  isEditing
+    }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let moveCellArray = heroModelArray.remove(at: sourceIndexPath.row)
+        heroModelArray.insert(moveCellArray, at: destinationIndexPath.row)
+    }
 
+     var herVC1:HeroViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"123456") as! HeroViewController
+    
+    // UIGestureRecognizerDelegate Recognizer
+    //3D touch with tableView 获取touchPoint
+    var touchGest:UITouch!
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool{
+        touchGest = touch
+        return false
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let point = touches.first?.location(in: tableView)
+        print("point = \(String(describing: point))")
+    }
+    //UIViewControllerPreviewingDelegate
+    //轻压
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        //3D touch with tableView  根据手指的Y，算出是第几个cell
+        let point = touchGest.location(in: tableView)
+        var  indexPath = tableView.indexPathForRow(at:point)
+
+        print("point = \(point)")
+        
+        let inn = indexPath?.row
+        print("inn = \(String(describing: inn))")
+
+        var name = ""
+        var name2 = ""
+
+        if searchBarStatu == 1  {
+            name = (heroSerchArry[(indexPath?.row)!] as HeroModel).enName
+            name2 = (heroSerchArry[(indexPath?.row)!] as HeroModel).name2
+        }else{
+            name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
+            name2 = (heroModelArray[(indexPath?.row)!] as HeroModel).name2
+        }
+
+        herVC1.heroName = name
+        herVC1.hidesBottomBarWhenPushed = true
+        herVC1.title = name2
+     
+        return herVC1
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+       show(herVC1, sender: self)
+        
+    }
+    
+    
+    
+    
 //    // Segue
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        if segue.identifier == "1000" {
@@ -266,28 +357,20 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 //                print("name = \(name),id = \(id),title = \(title)")
 //                print("\(tags)")
 //                print("http://ossweb-img.qq.com/images/lol/img/champion/\(nameHero).png\n")
-                
-                
            
                 let url = URL(string: "http://ossweb-img.qq.com/images/lol/img/champion/\(nameHero).png")
                 let data1 = try? Data(contentsOf: url!)
+                if data1 == nil{return}
                 let image = UIImage(data:data1!)
                 
-                
-                
-                
-                heroModelArray.append(HeroModel(name:title,name2:name,headImage:image!,enName:id,skill:skill,skill2:skill2))
+               heroModelArray.append(HeroModel(name:title,name2:name,headImage:image!,enName:id,skill:skill,skill2:skill2))
                
                 DispatchQueue.main.async(execute: {
                     self.tableView.reloadData()
                 })
             }
             
-            
-            
-            
-           
-            
+  
         }
         
         //请求开始

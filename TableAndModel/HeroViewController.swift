@@ -97,7 +97,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-   
+    print("heroName = \(heroName)")
      skinScroView.delegate = self
      self.view.backgroundColor = UIColor.black
     
@@ -145,7 +145,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
             })
             mainBackImageView_a = 0
         }
-     
+      
     }
     
     //UIScrollViewDelegate
@@ -469,7 +469,8 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
         //    查找过程 “111111***11111111111111111”
         //    查找过程 “1111111***1111111111111111”
         //    查找过程 “11111111***111111111111111”
-        //    查找过程 “111111111***11111111111111” 如果在这里找到了
+        //    查找过程 “111111111***11111111111111” 
+        //    查找过程 “1111111111***1111111111111” 如果在这里找到了
         //如果发现有和这三个字符串相同的字符串 ，就把这三个字符串后的字符串加起来然后返回，这样就实现了截取***后的字符串
         
         
