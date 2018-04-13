@@ -162,10 +162,10 @@ class CGView:UIView {
         }
         
       
-        
-        context.move(to: CGPoint(x: UIScreen.main.bounds.width/2-1.5, y: 154))
-        context.addLine(to: CGPoint(x:UIScreen.main.bounds.width/2-1.5, y: 180))
-        
+        if imagesLineAll.count>1 {
+        context.move(to: CGPoint(x: UIScreen.main.bounds.width/2, y: 154))
+        context.addLine(to: CGPoint(x:UIScreen.main.bounds.width/2, y: 180))
+        }
         
         if imagesLineAll.count>1 {
             
@@ -191,7 +191,8 @@ class CGView:UIView {
                 
                  let rectArry = imagesLineAll[2]
 
-                let x =   (rectArry.first?.origin.x)!+19
+               
+                var x1  =   CGFloat(MAXFLOAT)
                 var x2  =   CGFloat(0)
 
                 for rect in rectArry{
@@ -203,15 +204,18 @@ class CGView:UIView {
                     if rect.origin.x > x2 {
                          x2 = rect.origin.x
                     }
+                    if rect.origin.x < x1 {
+                        x1 = rect.origin.x
+                    }
 
                 }
                //横线
-                context.move(to: CGPoint(x: x, y: 180+80))
+                context.move(to: CGPoint(x: x1+19, y: 180+80))
                 context.addLine(to: CGPoint(x: x2+21, y: 180+80))
                 
                 //竖线
-                context.move(to: CGPoint(x:x+(x2+21-x)/2, y: 180+80))
-                context.addLine(to: CGPoint(x:x+(x2+21-x)/2, y: 180+59))
+                context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: 180+80))
+                context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: 180+59))
                 
             }
             
@@ -219,7 +223,7 @@ class CGView:UIView {
 
                 let rectArry = imagesLineAll[3]
                 
-                let x =   (rectArry.first?.origin.x)!+19
+                var x1  =   CGFloat(MAXFLOAT)
                 var x2  =   CGFloat(0)
                 
                 for rect in rectArry{
@@ -231,15 +235,18 @@ class CGView:UIView {
                     if rect.origin.x > x2 {
                         x2 = rect.origin.x
                     }
+                    if rect.origin.x < x1 {
+                        x1 = rect.origin.x
+                    }
                     
                 }
                  //横线
-                context.move(to: CGPoint(x: x, y: 200+80+64))
+                context.move(to: CGPoint(x: x1+19, y: 200+80+64))
                 context.addLine(to: CGPoint(x: x2+21, y: 200+80+64))
 
                //竖线
-                context.move(to: CGPoint(x:x+(x2+21-x)/2, y: 179+80+61))
-                context.addLine(to: CGPoint(x:x+(x2+21-x)/2, y: 179+80+85))
+                context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: 179+80+61))
+                context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: 179+80+85))
 
             }
             
