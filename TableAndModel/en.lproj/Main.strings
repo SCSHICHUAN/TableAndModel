@@ -1,0 +1,30 @@
+
+/* Class = "UILabel"; text = "Fighter"; ObjectID = "1zR-T8-u0W"; */
+"1zR-T8-u0W.text" = "Fighter";
+
+/* Class = "UILabel"; text = "Support"; ObjectID = "8Gp-jc-qm9"; */
+"8Gp-jc-qm9.text" = "Support";
+
+/* Class = "UINavigationItem"; title = "装备列表"; ObjectID = "HTg-zK-OOH"; */
+"HTg-zK-OOH.title" = "装备列表";
+
+/* Class = "UINavigationItem"; title = "英雄联盟列表"; ObjectID = "KDf-EK-XbF"; */
+"KDf-EK-XbF.title" = "英雄联盟列表";
+
+/* Class = "UILabel"; text = "诺克萨斯统领"; ObjectID = "RhJ-4s-pA9"; */
+"RhJ-4s-pA9.text" = "诺克萨斯统领";
+
+/* Class = "UILabel"; text = "Swain"; ObjectID = "TPb-XL-CP8"; */
+"TPb-XL-CP8.text" = "Swain";
+
+/* Class = "UILabel"; text = "斯维因"; ObjectID = "enV-WR-AQv"; */
+"enV-WR-AQv.text" = "斯维因";
+
+/* Class = "UITabBarItem"; title = "物品列表"; ObjectID = "fca-e4-PVG"; */
+"fca-e4-PVG.title" = "物品列表";
+
+/* Class = "UINavigationItem"; title = "召唤师技能"; ObjectID = "hvl-te-6y4"; */
+"hvl-te-6y4.title" = "召唤师技能";
+
+/* Class = "UITabBarItem"; title = "英雄列表"; ObjectID = "rjB-tZ-9LU"; */
+"rjB-tZ-9LU.title" = "英雄列表";

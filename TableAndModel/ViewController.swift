@@ -216,8 +216,7 @@ class ViewController:                                         UIViewController,U
         heroModelArray.insert(moveCellArray, at: destinationIndexPath.row)
     }
 
-     var herVC1:HeroViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"123456") as! HeroViewController
-    
+    var herVC1:HeroViewController!
     // UIGestureRecognizerDelegate Recognizer
     //3D touch with tableView 获取touchPoint
     var touchGest:UITouch!
@@ -233,22 +232,22 @@ class ViewController:                                         UIViewController,U
     //轻压
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
+       herVC1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"123456") as! HeroViewController
+        
+        
         //3D touch with tableView  根据手指的Y，算出是第几个cell
         let point = touchGest.location(in: tableView)
         var  indexPath = tableView.indexPathForRow(at:point)
 
         print("point = \(point)")
         
-        let inn = indexPath?.row
-        print("inn = \(String(describing: inn))")
+        let row = indexPath?.row
+        print("row = \(String(describing: row))")
 
         var name = ""
         var name2 = ""
 
-        if searchBarStatu == 1  {
-            name = (heroSerchArry[(indexPath?.row)!] as HeroModel).enName
-            name2 = (heroSerchArry[(indexPath?.row)!] as HeroModel).name2
-        }else{
+        if tableView.tag == 101 {
             name = (heroModelArray[(indexPath?.row)!] as HeroModel).enName
             name2 = (heroModelArray[(indexPath?.row)!] as HeroModel).name2
         }

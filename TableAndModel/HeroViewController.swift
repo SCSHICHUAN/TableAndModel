@@ -206,6 +206,7 @@ class HeroViewController: UIViewController,UIScrollViewDelegate {
                 let skinID = (skinItem as! NSDictionary)["id"] as! String
                 let url = URL(string: "http://ossweb-img.qq.com/images/lol/web201310/skin/big\(skinID).jpg")
                 let  data1 = try? Data(contentsOf: url!)
+                if data1 == nil {return}
                 let  image = UIImage(data:data1!)
                 
               //  print("current thread name is:\(Thread.current)")

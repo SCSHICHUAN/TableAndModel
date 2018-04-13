@@ -11,10 +11,12 @@
 		E360B879206DCDC100B1BD0A /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E360B878206DCDC100B1BD0A /* TestViewController.swift */; };
 		E3996BA52068970A009DC1AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3996BA42068970A009DC1AE /* AppDelegate.swift */; };
 		E3996BA72068970A009DC1AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3996BA62068970A009DC1AE /* ViewController.swift */; };
-		E3996BAA2068970A009DC1AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3996BA82068970A009DC1AE /* Main.storyboard */; settings = {ASSET_TAGS = (1000, ); }; };
+		E3996BAA2068970A009DC1AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3996BA82068970A009DC1AE /* Main.storyboard */; settings = {ASSET_TAGS = (1001, ); }; };
 		E3996BAC2068970A009DC1AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3996BAB2068970A009DC1AE /* Assets.xcassets */; };
 		E3996BAF2068970A009DC1AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3996BAD2068970A009DC1AE /* LaunchScreen.storyboard */; };
 		E3996BB72069CC28009DC1AE /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3996BB62069CC28009DC1AE /* HeroModel.swift */; };
+		E3A6E8F3207F491D00788CC8 /* GoodsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A6E8F2207F491D00788CC8 /* GoodsModel.swift */; };
+		E3A6E8F52080860200788CC8 /* GoodsItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A6E8F42080860200788CC8 /* GoodsItemViewController.swift */; };
 		E3D9F1FD20747DCF008A6F42 /* GoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D9F1FC20747DCF008A6F42 /* GoodsViewController.swift */; };
 		E3F8A621206A442C00A5DF8B /* HeroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F8A620206A442C00A5DF8B /* HeroViewController.swift */; };
 /* End PBXBuildFile section */
@@ -31,6 +33,8 @@
 		E3996BAE2068970A009DC1AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3996BB02068970A009DC1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3996BB62069CC28009DC1AE /* HeroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroModel.swift; sourceTree = "<group>"; };
+		E3A6E8F2207F491D00788CC8 /* GoodsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsModel.swift; sourceTree = "<group>"; };
+		E3A6E8F42080860200788CC8 /* GoodsItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsItemViewController.swift; sourceTree = "<group>"; };
 		E3D9F1FC20747DCF008A6F42 /* GoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsViewController.swift; sourceTree = "<group>"; };
 		E3D9F1FE2079DBEB008A6F42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		E3D9F1FF2079DBEB008A6F42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -90,14 +94,16 @@
 			children = (
 				E3996BA42068970A009DC1AE /* AppDelegate.swift */,
 				E3996BB62069CC28009DC1AE /* HeroModel.swift */,
+				E3A6E8F2207F491D00788CC8 /* GoodsModel.swift */,
 				E3996BA62068970A009DC1AE /* ViewController.swift */,
 				E3F8A620206A442C00A5DF8B /* HeroViewController.swift */,
+				E3D9F1FC20747DCF008A6F42 /* GoodsViewController.swift */,
+				E3A6E8F42080860200788CC8 /* GoodsItemViewController.swift */,
 				E3996BA82068970A009DC1AE /* Main.storyboard */,
 				E3996BAB2068970A009DC1AE /* Assets.xcassets */,
 				E3996BB02068970A009DC1AE /* Info.plist */,
 				E3996BAD2068970A009DC1AE /* LaunchScreen.storyboard */,
 				E360B878206DCDC100B1BD0A /* TestViewController.swift */,
-				E3D9F1FC20747DCF008A6F42 /* GoodsViewController.swift */,
 			);
 			path = TableAndModel;
 			sourceTree = "<group>";
@@ -133,6 +139,7 @@
 			attributes = {
 				KnownAssetTags = (
 					1000,
+					1001,
 				);
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0920;
@@ -233,7 +240,9 @@
 			files = (
 				E360B879206DCDC100B1BD0A /* TestViewController.swift in Sources */,
 				E3F8A621206A442C00A5DF8B /* HeroViewController.swift in Sources */,
+				E3A6E8F52080860200788CC8 /* GoodsItemViewController.swift in Sources */,
 				E3996BA72068970A009DC1AE /* ViewController.swift in Sources */,
+				E3A6E8F3207F491D00788CC8 /* GoodsModel.swift in Sources */,
 				E3996BA52068970A009DC1AE /* AppDelegate.swift in Sources */,
 				E3996BB72069CC28009DC1AE /* HeroModel.swift in Sources */,
 				E3D9F1FD20747DCF008A6F42 /* GoodsViewController.swift in Sources */,

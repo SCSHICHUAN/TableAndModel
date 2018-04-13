@@ -10,12 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--英雄列表-->
+        <!--Navigation Controller-->
         <scene sceneID="dyx-cP-lrT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qhW-nT-O9Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController modalPresentationStyle="overFullScreen" id="sCi-WL-LNV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="英雄列表" id="u4h-ty-1bd"/>
+                    <tabBarItem key="tabBarItem" title="" id="u4h-ty-1bd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vfL-PY-eQc">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -24,8 +23,9 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="LVg-At-Apt"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qhW-nT-O9Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-397" y="-444"/>
+            <point key="canvasLocation" x="-1194" y="-338"/>
         </scene>
         <!--英雄联盟列表-->
         <scene sceneID="tne-QT-ifu">
@@ -147,7 +147,7 @@
                             <constraint firstItem="8BE-M9-KVo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="oC4-4O-h4c"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" id="rjB-tZ-9LU"/>
+                    <tabBarItem key="tabBarItem" title="英雄列表" image="viking_helmet" id="rjB-tZ-9LU"/>
                     <navigationItem key="navigationItem" title="英雄联盟列表" id="KDf-EK-XbF">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="hwQ-C6-fXL">
                             <connections>
@@ -172,7 +172,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="69" y="-443"/>
+            <point key="canvasLocation" x="-809" y="-338"/>
         </scene>
         <!--Hero View Controller-->
         <scene sceneID="1s7-eo-SA5">
@@ -192,12 +192,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iju-fd-E7U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="533" y="-440"/>
+            <point key="canvasLocation" x="-425" y="-339"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="uDR-UP-pze">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LeO-kE-Wln" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="flipHorizontal" hidesBottomBarWhenPushed="YES" id="PSO-fj-xEl" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
@@ -209,18 +208,19 @@
                     </tabBar>
                     <connections>
                         <segue destination="sCi-WL-LNV" kind="relationship" relationship="viewControllers" id="RW9-Ji-1eI"/>
-                        <segue destination="J5z-7R-XKy" kind="relationship" relationship="viewControllers" id="Esl-Ip-gHS"/>
-                        <segue destination="ZT4-Y2-5Ae" kind="relationship" relationship="viewControllers" id="st9-lO-PRN"/>
+                        <segue destination="J5z-7R-XKy" kind="relationship" relationship="viewControllers" id="7DA-gK-ncC"/>
+                        <segue destination="ZT4-Y2-5Ae" kind="relationship" relationship="viewControllers" id="UA1-SH-2bz"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LeO-kE-Wln" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-857" y="-445"/>
+            <point key="canvasLocation" x="-1586" y="-337"/>
         </scene>
-        <!--英雄装备-->
+        <!--Navigation Controller-->
         <scene sceneID="Udg-BO-lUE">
             <objects>
                 <navigationController id="J5z-7R-XKy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="英雄装备" id="HkK-4i-J5h"/>
+                    <tabBarItem key="tabBarItem" title="" id="HkK-4i-J5h"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nBX-Iz-48d">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -231,7 +231,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hAX-1s-4Hi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-283" y="459"/>
+            <point key="canvasLocation" x="-2002" y="505"/>
         </scene>
         <!--装备列表-->
         <scene sceneID="U1c-4K-FQV">
@@ -244,14 +244,102 @@
                     <view key="view" contentMode="scaleToFill" id="VdS-9j-YtD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="100" maximumZoomScale="100" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="J9M-se-HKR">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="RNJ-LZ-rLW">
+                                    <size key="itemSize" width="206" height="254"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="goodsCell" reuseIdentifier="goodsCell" id="rxc-nu-QhR">
+                                        <rect key="frame" x="84.5" y="0.0" width="206" height="254"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="206" height="254"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" tag="120" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iqf-ds-d1C">
+                                                    <rect key="frame" x="0.0" y="0.0" width="206" height="214"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="121" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiW-Rv-XmG">
+                                                    <rect key="frame" x="0.0" y="214" width="206" height="40"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="tiW-Rv-XmG" secondAttribute="trailing" id="06d-NJ-dvG"/>
+                                            <constraint firstAttribute="trailing" secondItem="iqf-ds-d1C" secondAttribute="trailing" id="ETD-RB-9Kt"/>
+                                            <constraint firstAttribute="bottom" secondItem="iqf-ds-d1C" secondAttribute="bottom" constant="40" id="HnF-Xy-n1p"/>
+                                            <constraint firstItem="tiW-Rv-XmG" firstAttribute="leading" secondItem="rxc-nu-QhR" secondAttribute="leading" id="PLT-rY-wQc"/>
+                                            <constraint firstItem="iqf-ds-d1C" firstAttribute="top" secondItem="rxc-nu-QhR" secondAttribute="top" id="Rlz-gc-ohf"/>
+                                            <constraint firstAttribute="bottom" secondItem="tiW-Rv-XmG" secondAttribute="bottom" id="lmC-X3-HxN"/>
+                                            <constraint firstItem="iqf-ds-d1C" firstAttribute="leading" secondItem="rxc-nu-QhR" secondAttribute="leading" id="ueK-3O-oug"/>
+                                            <constraint firstItem="tiW-Rv-XmG" firstAttribute="top" secondItem="iqf-ds-d1C" secondAttribute="bottom" id="wM4-ed-8Jb"/>
+                                        </constraints>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="JJs-qX-Jpk" id="geO-na-rMa"/>
+                                    <outlet property="delegate" destination="JJs-qX-Jpk" id="SeQ-8M-AR1"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="J9M-se-HKR" firstAttribute="top" secondItem="rtb-Hs-kz5" secondAttribute="bottom" id="BMs-RH-fJV"/>
+                            <constraint firstItem="J9M-se-HKR" firstAttribute="leading" secondItem="VdS-9j-YtD" secondAttribute="leading" id="JBm-QV-9Qa"/>
+                            <constraint firstAttribute="trailing" secondItem="J9M-se-HKR" secondAttribute="trailing" id="fvt-ce-sQm"/>
+                            <constraint firstItem="xgP-SJ-Kkx" firstAttribute="top" secondItem="J9M-se-HKR" secondAttribute="bottom" id="mke-rE-aGm"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" id="fca-e4-PVG"/>
+                    <tabBarItem key="tabBarItem" title="物品列表" image="small_axe" id="fca-e4-PVG"/>
                     <navigationItem key="navigationItem" title="装备列表" id="HTg-zK-OOH"/>
+                    <connections>
+                        <outlet property="collectionView" destination="J9M-se-HKR" id="cZY-Js-5Lj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pAN-vK-UBP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="459"/>
+            <point key="canvasLocation" x="-1619" y="505"/>
+        </scene>
+        <!--Goods Item View Controller-->
+        <scene sceneID="jUy-sU-aGm">
+            <objects>
+                <viewController storyboardIdentifier="1112" id="HOE-OD-V4k" customClass="GoodsItemViewController" customModule="TableAndModel" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0s0-KI-tzH"/>
+                        <viewControllerLayoutGuide type="bottom" id="aaI-X8-90s"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1YQ-Ay-bO9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" tag="115" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dE8-ga-QnK">
+                                <rect key="frame" x="147.5" y="30" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="08h-to-Hff"/>
+                                    <constraint firstAttribute="width" constant="80" id="DLO-5i-aOH"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dE8-ga-QnK" firstAttribute="top" secondItem="0s0-KI-tzH" secondAttribute="bottom" constant="10" id="mVn-yr-kVl"/>
+                            <constraint firstItem="dE8-ga-QnK" firstAttribute="centerX" secondItem="1YQ-Ay-bO9" secondAttribute="centerX" id="u9s-px-aEY"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="JxT-kK-1Vw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PVY-jm-9w9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1236.5" y="504.5"/>
         </scene>
         <!--召唤师技能-->
         <scene sceneID="TH2-z4-QKp">
@@ -271,13 +359,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mjh-tq-loD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-674" y="459"/>
+            <point key="canvasLocation" x="-1620" y="1237"/>
         </scene>
-        <!--物品列表-->
+        <!--Navigation Controller-->
         <scene sceneID="WIB-kt-mvN">
             <objects>
                 <navigationController id="ZT4-Y2-5Ae" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="物品列表" id="vKk-rk-uqw"/>
+                    <tabBarItem key="tabBarItem" title="" id="vKk-rk-uqw"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yc1-3b-RQP">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -288,10 +376,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m5z-VA-vaQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1090" y="459"/>
+            <point key="canvasLocation" x="-2003" y="1237"/>
         </scene>
     </scenes>
     <resources>
         <image name="Jax" width="120" height="120"/>
+        <image name="small_axe" width="30" height="30"/>
+        <image name="viking_helmet" width="30" height="30"/>
     </resources>
 </document>
