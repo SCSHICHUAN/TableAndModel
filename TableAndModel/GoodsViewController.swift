@@ -10,6 +10,7 @@ import UIKit
 
 var goodsArry = [GoodsModel]()
 var goodsDict = [String:UIImage]()
+var goodsJSON:NSDictionary!
 
 class GoodsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
    
@@ -75,13 +76,11 @@ class GoodsViewController: UIViewController,UICollectionViewDelegate,UICollectio
          vc.hidesBottomBarWhenPushed = true
          vc.name = model.name
          vc.image = model.headImage
+         vc.images = model.images
+         vc.goodsDict = goodsDict
+         vc.goodsJSON = goodsJSON
         
-        var images1 = [UIImage]()
-        for imageKey in model.images {
-            let image = goodsDict[imageKey as! String]
-            images1.append(image!)
-        }
-        vc.images = images1
+        
         self.navigationController?.pushViewController(vc, animated: true)        
     }
     
@@ -141,7 +140,7 @@ class GoodsViewController: UIViewController,UICollectionViewDelegate,UICollectio
             let jsonData:NSDictionary = try! JSONSerialization.jsonObject(with: testData!, options: .mutableContainers) as! NSDictionary
             
              let goods = jsonData["data"] as!NSDictionary
-            
+             goodsJSON = jsonData["data"] as!NSDictionary
            //  print(goods);
             
             

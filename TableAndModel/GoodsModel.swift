@@ -13,10 +13,10 @@ class GoodsModel: NSObject {
     var name:String
     var description1:String
     var headImage:UIImage
-    var images:Array<Any>
+    var images:Array<String>
    
     
-    init(name:String,description1:String,headImage:UIImage,images:Array<Any>) {
+    init(name:String,description1:String,headImage:UIImage,images:Array<String>) {
         self.name = name
         self.description1 = description1
         self.headImage = headImage
