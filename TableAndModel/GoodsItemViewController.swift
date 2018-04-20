@@ -8,16 +8,23 @@
 
 import UIKit
 
+struct rectSC {
+    var layer:String!
+    var rect:CGRect!
+}
+
+
+
 class GoodsItemViewController: UIViewController {
     var name:String!
     var image:UIImage!
     var goodsDict:Dictionary<String,UIImage>!
     var images:Array<String>!
     var goodsJSON:NSDictionary!
-    var imagesLine = [CGRect]()
-    var imagesLine1 = [CGRect]()
-    var imagesLine2 = [CGRect]()
-    var imagesLineAll = [[CGRect]()]
+    var imagesLine =  [rectSC]()
+    var imagesLine1 = [rectSC]()
+    var imagesLine2 = [rectSC]()
+    var imagesLineAll = [[rectSC]()]
     
     
     override func viewDidLoad() {
@@ -28,14 +35,15 @@ class GoodsItemViewController: UIViewController {
         let imageV    = self.view.viewWithTag(115) as! UIImageView
         imageV.image = image
         let morge  = (UIScreen.main.bounds.width/CGFloat(images.count))
-        
        
+        
         if images.count>0 {
             //第二层 装备
             for firstLayer in 1...images.count{
-               
-                let imageView = UIImageView(frame: CGRect(x:CGFloat(firstLayer-1)*morge + morge/2-40/2, y: 200, width: 40, height: 40))
-                imagesLine.append(CGRect(x:CGFloat(firstLayer-1)*morge + morge/2-40/2, y: 200, width: 40, height: 40))
+                let rect0 = CGRect(x:CGFloat(firstLayer-1)*morge + morge/2-40/2, y: 200, width: 40, height: 40)
+                let imageView = UIImageView(frame:rect0)
+                let rectStu = rectSC(layer: "0", rect: rect0)
+                imagesLine.append(rectStu)
                 imageView.image = goodsDict[images[firstLayer-1]]
                 print("imageKeyStr = \(firstLayer)=\(images[firstLayer-1])")
                 self.view .addSubview(imageView)
@@ -55,10 +63,13 @@ class GoodsItemViewController: UIViewController {
                             
                                 for secondLayer in 1...images2.count{
                                     //注意layer的添加
-                                    let imageView = UIImageView(frame: CGRect(x:morge*CGFloat(firstLayer-1)+CGFloat(secondLayer-1)*morge2+morge2/2-40/2, y: 280, width: 40, height: 40))
+                                    let rect1 = CGRect(x:morge*CGFloat(firstLayer-1)+CGFloat(secondLayer-1)*morge2+morge2/2-40/2, y: 280, width: 40, height: 40)
+                                    let imageView = UIImageView(frame:rect1)
                                     imageView.image = goodsDict[images2[secondLayer-1]]
                                     self.view .addSubview(imageView)
-                                    imagesLine1.append( CGRect(x:CGFloat(secondLayer-1)*morge2 + morge2/2-40/2, y: 280, width: 40, height: 40))
+                                    let rectstu1 = rectSC(layer: "\(firstLayer)", rect: rect1)
+                                    imagesLine1.append(rectstu1)
+                                    
                                     
                                     //第四层 装备
                                     var images3 = [String]()
@@ -69,11 +80,14 @@ class GoodsItemViewController: UIViewController {
                                             let morge3 =  morge2/CGFloat(images3.count)
                                             
                                             for thirtLayer in 1...images3.count{
+                                                 let rect3 = CGRect(x:morge*CGFloat(firstLayer-1)+morge2*CGFloat(secondLayer-1)+CGFloat(thirtLayer-1)*morge3 + morge3/2-40/2, y: 360, width: 40, height: 40)
                                                 //                                                         第一层                       第二层                   第三层
-                                                let imageView = UIImageView(frame: CGRect(x:morge*CGFloat(firstLayer-1)+morge2*CGFloat(secondLayer-1)+CGFloat(thirtLayer-1)*morge3 + morge3/2-40/2, y: 360, width: 40, height: 40))
+                                                let imageView = UIImageView(frame: rect3)
                                                 imageView.image = goodsDict[images3[thirtLayer-1]]
                                                 self.view .addSubview(imageView)
-                                                imagesLine2.append(CGRect(x:CGFloat(thirtLayer-1)*morge3 + morge3/2-40/2, y: 360, width: 40, height: 40))
+                                                let stu = rectSC(layer: "\(secondLayer)", rect: rect3)
+                                                
+                                                imagesLine2.append(stu)
                                             }
                                             
                                         }else{
@@ -115,10 +129,10 @@ class GoodsItemViewController: UIViewController {
 
 class CGView:UIView {
     
-     var imagesLineAll = [[CGRect]()]
+     var imagesLineAll = [[rectSC]()]
     
     
-    init(frame: CGRect,lineRect:Array<Array<CGRect>>) {
+    init(frame: CGRect,lineRect:Array<[rectSC]>) {
         super.init(frame: frame)
         //设置背景色为透明，否则是黑色背景
         self.backgroundColor = UIColor.clear
@@ -143,116 +157,258 @@ class CGView:UIView {
         context.addLine(to: CGPoint(x:UIScreen.main.bounds.width/2, y: 180))
         }
         
-//        if imagesLineAll.count>1 {
-//
-//
-//
-//            let x =   (imagesLineAll[1].first?.origin.x)!+19
-//            let x2 =   (imagesLineAll[1].last?.origin.x)!+21
-//
-//            context.move(to: CGPoint(x: x, y: 180))
-//            context.addLine(to: CGPoint(x: x2, y: 180))
-//
-//            let rectArry = imagesLineAll[1]
-//
-//            for rect in rectArry{
-//                let rect = rect
-//
-//                context.move(to: CGPoint(x: rect.origin.x+20, y: 179))
-//                context.addLine(to: CGPoint(x: rect.origin.x+20, y: 200))
-//
-//            }
-//
-//            if imagesLineAll.count>2 {
-//
-//                 let rectArry = imagesLineAll[2]
-//
-//
-//                var x1  =   CGFloat(MAXFLOAT)
-//                var x2  =   CGFloat(0)
-//
-//                for rect in rectArry{
-//                    let rect = rect
-//
-//                    context.move(to: CGPoint(x: rect.origin.x+20, y: 179+80))
-//                    context.addLine(to: CGPoint(x: rect.origin.x+20, y: 200+80))
-//
-//                    if rect.origin.x > x2 {
-//                         x2 = rect.origin.x
-//                    }
-//                    if rect.origin.x < x1 {
-//                        x1 = rect.origin.x
-//                    }
-//
-//                }
-//               //横线
-//                context.move(to: CGPoint(x: x1+19, y: 180+80))
-//                context.addLine(to: CGPoint(x: x2+21, y: 180+80))
-//
-//                //竖线
-//                context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: 180+80))
-//                context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: 180+59))
-//
-//            }
-//
-//            if imagesLineAll.count>3 {
-//
-//                let rectArry = imagesLineAll[3]
-//
-//                var x1  =   CGFloat(MAXFLOAT)
-//                var x2  =   CGFloat(0)
-//
-//                for rect in rectArry{
-//                    let rect = rect
-//
-//                    context.move(to: CGPoint(x: rect.origin.x+20, y: 179+80+101))
-//                    context.addLine(to: CGPoint(x: rect.origin.x+20, y: 200+80+64))
-//
-//                    if rect.origin.x > x2 {
-//                        x2 = rect.origin.x
-//                    }
-//                    if rect.origin.x < x1 {
-//                        x1 = rect.origin.x
-//                    }
-//
-//                }
-//                 //横线
-//                context.move(to: CGPoint(x: x1+19, y: 200+80+64))
-//                context.addLine(to: CGPoint(x: x2+21, y: 200+80+64))
-//
-//               //竖线
-//                context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: 179+80+61))
-//                context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: 179+80+85))
-//
-//            }
-//
-//
-////            if imagesLineAll.count>4 {
-////
-////                let x =   (imagesLineAll[4].first?.origin.x)!+19
-////                let x2 =   (imagesLineAll[4].last?.origin.x)!+21
-////
-////                context.move(to: CGPoint(x: x, y: 180))
-////                context.addLine(to: CGPoint(x: x2, y: 180))
-////
-////                let rectArry = imagesLineAll[4]
-////
-////                for rect in rectArry{
-////                    let rect = rect
-////
-////                    context.move(to: CGPoint(x: rect.origin.x+20, y: 179))
-////                    context.addLine(to: CGPoint(x: rect.origin.x+20, y: 200))
-////
-////                }
-////
-////            }
-//
-//
-//
-//
-//
-//
-//        }
+        if imagesLineAll.count>1 {
+          
+            
+            
+            let x =   (imagesLineAll[1].first?.rect.origin.x)!+19
+            let x2 =   (imagesLineAll[1].last?.rect.origin.x)!+21
+
+            context.move(to: CGPoint(x: x, y: 180))
+            context.addLine(to: CGPoint(x: x2, y: 180))
+
+            let rectArry = imagesLineAll[1]
+
+            for rect in rectArry{
+                let rect = rect.rect!
+
+                //竖线
+                context.move(to: CGPoint(x:rect.origin.x+20, y: rect.origin.y))
+                context.addLine(to: CGPoint(x:rect.origin.x+20, y: rect.origin.y-20))
+
+            }
+
+            if imagesLineAll.count>2 {
+
+                 let rectArry = imagesLineAll[2]
+
+
+                
+                var array11 = [rectSC]()
+                var array12 = [rectSC]()
+                var array13 = [rectSC]()
+                for rect in rectArry{
+                    //竖线
+                    context.move(to: CGPoint(x:rect.rect.origin.x+20, y: rect.rect.origin.y))
+                    context.addLine(to: CGPoint(x:rect.rect.origin.x+20, y: rect.rect.origin.y-20))
+
+                   if rect.layer == "1"{
+                       array11.append(rect)
+                   }else if rect.layer == "2"{
+                       array12.append(rect)
+                   }else if rect.layer == "3"{
+                       array13.append(rect)
+                
+                    }
+                }
+                
+                if array11.count>0{
+                    var x1  =   CGFloat(MAXFLOAT)
+                    var x2  =   CGFloat(0)
+                    
+                    
+                    for rect in array11{
+                        
+                        if rect.rect.origin.x > x2 {
+                            x2 = rect.rect.origin.x
+                        }
+                        if rect.rect.origin.x < x1 {
+                            x1 = rect.rect.origin.x
+                        }
+                    }
+                    //竖线
+                    context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: array11[0].rect.origin.y-20))
+                    context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: array11[0].rect.origin.y-40))
+                    if array11.count>1{
+                        //横线
+                        context.move(to: CGPoint(x: x1+19, y: array11[0].rect.origin.y-20))
+                        context.addLine(to: CGPoint(x: x2+21, y: array11[0].rect.origin.y-20))
+                    }
+                    
+                }
+                
+                
+              if array12.count>0{
+                    var x1  =   CGFloat(MAXFLOAT)
+                    var x2  =   CGFloat(0)
+                    
+                    
+                    for rect in array12{
+                        
+                        if rect.rect.origin.x > x2 {
+                            x2 = rect.rect.origin.x
+                        }
+                        if rect.rect.origin.x < x1 {
+                            x1 = rect.rect.origin.x
+                        }
+                    }
+                    //竖线
+                    context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: array12[0].rect.origin.y-20))
+                    context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: array12[0].rect.origin.y-40))
+                
+               
+                if array12.count>1{
+                    //横线
+                    context.move(to: CGPoint(x: x1+19, y: array12[0].rect.origin.y-20))
+                    context.addLine(to: CGPoint(x: x2+21, y: array12[0].rect.origin.y-20))
+                }
+                
+                }
+
+                
+                if array13.count>0{
+                    var x1  =   CGFloat(MAXFLOAT)
+                    var x2  =   CGFloat(0)
+                    
+                    
+                    for rect in array13{
+                        
+                        if rect.rect.origin.x > x2 {
+                            x2 = rect.rect.origin.x
+                        }
+                        if rect.rect.origin.x < x1 {
+                            x1 = rect.rect.origin.x
+                        }
+                    }
+                    //竖线
+                    context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: array13[0].rect.origin.y-20))
+                    context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: array13[0].rect.origin.y-40))
+                    if array13.count > 1{
+                        //横线
+                        context.move(to: CGPoint(x: x1+19, y: array13[0].rect.origin.y-20))
+                        context.addLine(to: CGPoint(x: x2+21, y: array13[0].rect.origin.y-20))
+                    }
+                    
+                }
+                
+                
+               
+
+
+
+            }
+            
+            
+            if imagesLineAll.count>3 {
+                
+                let rectArry = imagesLineAll[3]
+                
+                
+                
+                var array11 = [rectSC]()
+                var array12 = [rectSC]()
+                var array13 = [rectSC]()
+                for rect in rectArry{
+                    //竖线
+                    context.move(to: CGPoint(x:rect.rect.origin.x+20, y: rect.rect.origin.y))
+                    context.addLine(to: CGPoint(x:rect.rect.origin.x+20, y: rect.rect.origin.y-20))
+                    
+                    if rect.layer == "1"{
+                        array11.append(rect)
+                    }else if rect.layer == "2"{
+                        array12.append(rect)
+                    }else if rect.layer == "3"{
+                        array13.append(rect)
+                        
+                    }
+                }
+                
+                if array11.count>0{
+                    var x1  =   CGFloat(MAXFLOAT)
+                    var x2  =   CGFloat(0)
+                    
+                    
+                    for rect in array11{
+                        
+                        if rect.rect.origin.x > x2 {
+                            x2 = rect.rect.origin.x
+                        }
+                        if rect.rect.origin.x < x1 {
+                            x1 = rect.rect.origin.x
+                        }
+                    }
+                    //竖线
+                    context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: array11[0].rect.origin.y-20))
+                    context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: array11[0].rect.origin.y-40))
+                    if array11.count>1{
+                        //横线
+                        context.move(to: CGPoint(x: x1+19, y: array11[0].rect.origin.y-20))
+                        context.addLine(to: CGPoint(x: x2+21, y: array11[0].rect.origin.y-20))
+                    }
+                    
+                }
+                
+                
+                if array12.count>0{
+                    var x1  =   CGFloat(MAXFLOAT)
+                    var x2  =   CGFloat(0)
+                    
+                    
+                    for rect in array12{
+                        
+                        if rect.rect.origin.x > x2 {
+                            x2 = rect.rect.origin.x
+                        }
+                        if rect.rect.origin.x < x1 {
+                            x1 = rect.rect.origin.x
+                        }
+                    }
+                    //竖线
+                    context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: array12[0].rect.origin.y-20))
+                    context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: array12[0].rect.origin.y-40))
+                    
+                    
+                    if array12.count>1{
+                        //横线
+                        context.move(to: CGPoint(x: x1+19, y: array12[0].rect.origin.y-20))
+                        context.addLine(to: CGPoint(x: x2+21, y: array12[0].rect.origin.y-20))
+                    }
+                    
+                }
+                
+                
+                if array13.count>0{
+                    var x1  =   CGFloat(MAXFLOAT)
+                    var x2  =   CGFloat(0)
+                    
+                    
+                    for rect in array13{
+                        
+                        if rect.rect.origin.x > x2 {
+                            x2 = rect.rect.origin.x
+                        }
+                        if rect.rect.origin.x < x1 {
+                            x1 = rect.rect.origin.x
+                        }
+                    }
+                    //竖线
+                    context.move(to: CGPoint(x:x1+20+(x2-x1)/2, y: array13[0].rect.origin.y-20))
+                    context.addLine(to: CGPoint(x:x1+20+(x2-x1)/2, y: array13[0].rect.origin.y-40))
+                    if array13.count > 1{
+                        //横线
+                        context.move(to: CGPoint(x: x1+19, y: array13[0].rect.origin.y-20))
+                        context.addLine(to: CGPoint(x: x2+21, y: array13[0].rect.origin.y-20))
+                    }
+                    
+                }
+                
+                
+                
+                
+                
+                
+            }
+            
+            
+            
+            
+
+
+
+
+
+
+        }
         
         
         
