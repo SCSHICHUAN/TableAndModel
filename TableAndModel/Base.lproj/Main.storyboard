@@ -322,7 +322,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" tag="115" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dE8-ga-QnK">
-                                <rect key="frame" x="147.5" y="30" width="80" height="80"/>
+                                <rect key="frame" x="147" y="74" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="08h-to-Hff"/>
                                     <constraint firstAttribute="width" constant="80" id="DLO-5i-aOH"/>
@@ -331,7 +331,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="dE8-ga-QnK" firstAttribute="top" secondItem="0s0-KI-tzH" secondAttribute="bottom" constant="10" id="mVn-yr-kVl"/>
+                            <constraint firstItem="dE8-ga-QnK" firstAttribute="top" secondItem="0s0-KI-tzH" secondAttribute="bottom" constant="54" id="mVn-yr-kVl"/>
                             <constraint firstItem="dE8-ga-QnK" firstAttribute="centerX" secondItem="1YQ-Ay-bO9" secondAttribute="centerX" id="u9s-px-aEY"/>
                         </constraints>
                     </view>

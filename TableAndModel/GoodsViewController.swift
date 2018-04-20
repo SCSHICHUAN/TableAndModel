@@ -15,7 +15,7 @@ var goodsJSON:NSDictionary!
 class GoodsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
    
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    var vc:GoodsItemViewController!
     
     
     
@@ -65,26 +65,44 @@ class GoodsViewController: UIViewController,UICollectionViewDelegate,UICollectio
         return 2
     }
     
+    
     //UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         
         let model = goodsArry[indexPath.item]
         
-        
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"1112") as! GoodsItemViewController
+         vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"1112") as! GoodsItemViewController
+       
          vc.hidesBottomBarWhenPushed = true
          vc.name = model.name
          vc.image = model.headImage
          vc.images = model.images
          vc.goodsDict = goodsDict
          vc.goodsJSON = goodsJSON
+         vc.descriptionStr = model.description1
+         vc.view.backgroundColor = UIColor(white: 0, alpha: 0.9)
+        
+       
+        let button = UIButton(frame: UIScreen.main.bounds)
+        vc.view .addSubview(button)
+        button .addTarget(self, action:#selector(button2), for:.touchUpInside)
         
         
-        self.navigationController?.pushViewController(vc, animated: true)        
+        
+         self.view  .addSubview(vc.view)
+        //self.navigationController?.pushViewController(vc, animated: true)
+        
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
     }
     
-    
+    @objc func button2(){
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        vc.view .removeFromSuperview()
+       
+    }
     
     
     func GETACtion() {
@@ -126,7 +144,7 @@ class GoodsViewController: UIViewController,UICollectionViewDelegate,UICollectio
             var dogString:String = NSString(data: data!, encoding: enc)! as String
             //self.GETACtion2(herID: dogString)
             
-            // print("str:\(dogString)")
+           // print("str:\(dogString)")
             
             let range = dogString.index(dogString.endIndex, offsetBy: -1)..<dogString.endIndex
             let range2 = dogString.startIndex..<dogString.index(dogString.startIndex, offsetBy:28)//头

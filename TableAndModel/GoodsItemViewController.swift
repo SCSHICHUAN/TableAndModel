@@ -25,17 +25,41 @@ class GoodsItemViewController: UIViewController {
     var imagesLine1 = [rectSC]()
     var imagesLine2 = [rectSC]()
     var imagesLineAll = [[rectSC]()]
+    var descriptionStr:String!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+       
+        
         // Do any additional setup after loading the view.
         self.title = name
         let imageV    = self.view.viewWithTag(115) as! UIImageView
         imageV.image = image
         let morge  = (UIScreen.main.bounds.width/CGFloat(images.count))
        
+        let leable = UILabel(frame: CGRect(x: 10, y: 300, width:UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.width))
+        leable.numberOfLines = 0
+        leable.text =  cutOutText(allStr: descriptionStr, starStr: "<", endStr: ">")
+        leable.textColor = UIColor(red: 128.0/255.0, green: 215.0/255.0, blue: 64.0/255.0, alpha: 1)
+        
+        
+        self.view .addSubview(leable)
+        do{
+            let leable = UILabel(frame: CGRect(x:0, y: 40, width:UIScreen.main.bounds.width, height: 22))
+            leable.text = name
+            leable.textAlignment = NSTextAlignment.center
+            leable.textColor = UIColor(red: 128.0/255.0, green: 215.0/255.0, blue: 64.0/255.0, alpha: 1)
+            if #available(iOS 8.2, *) {
+                leable.font = UIFont.systemFont(ofSize: 17, weight: .init(1.5))
+            } else {
+                // Fallback on earlier versions
+            }
+            self.view .addSubview(leable)
+        }
+       
+        
         
         if images.count>0 {
             //第二层 装备
@@ -122,6 +146,70 @@ class GoodsItemViewController: UIViewController {
     
     }
 
+    
+    func cutOutText(allStr:String,starStr:String,endStr:String)->String{
+        
+        //原理说明，把需要截取的字符串添加在一起，不要在原有的基础上截取，如果在原有的字符串截取，由于index是
+        //变换的代码不好实现，
+        //  oldStr = “11111111111111111111111111” 以三个字符串的大小为例子
+        //    查找过程 “***11111111111111111111111”
+        //    查找过程 “1***1111111111111111111111”
+        //    查找过程 “11***111111111111111111111”
+        //    查找过程 “111***11111111111111111111”
+        //    查找过程 “1111***1111111111111111111”
+        //    查找过程 “11111***111111111111111111”
+        //    查找过程 “111111***11111111111111111”
+        //    查找过程 “1111111***1111111111111111”
+        //    查找过程 “11111111***111111111111111”
+        //    查找过程 “111111111***11111111111111”
+        //    查找过程 “1111111111***1111111111111” 如果在这里找到了
+        //如果发现有和这三个字符串相同的字符串 ，就把这三个字符串后的字符串加起来然后返回，这样就实现了截取***后的字符串
+        
+        
+        
+        var find = false
+        var finally = ""
+        var finally2 = ""
+        
+        if starStr.count >  allStr.count {
+            return ""
+        }
+        
+        for i in 0...allStr.endIndex.encodedOffset - starStr.endIndex.encodedOffset {
+            
+            //截取开始的字符串
+            let startIndex = allStr.index(allStr.startIndex, offsetBy:i)
+            let endIndex =  allStr.index(startIndex, offsetBy:starStr.endIndex.encodedOffset)
+            let result =    allStr[startIndex..<endIndex]
+            
+            //截取结尾的字符串
+            let startIndex2 = allStr.index(allStr.startIndex, offsetBy:i)
+            let endIndex2 =  allStr.index(startIndex2, offsetBy:endStr.endIndex.encodedOffset)
+            let result2 =    allStr[startIndex2..<endIndex2]
+            
+            
+            //如果发现头str相同
+            if result == starStr {
+                find = true
+            }
+            
+            if find {
+                finally2 += result2 //字符串相加
+            }else{
+                finally  += result2
+            }
+            
+            
+            if result2 == endStr {
+                find = false
+            }
+            
+        }
+        
+        print("finally2 = \(finally2)")
+        return finally
+    }
+    
     
     
 }
